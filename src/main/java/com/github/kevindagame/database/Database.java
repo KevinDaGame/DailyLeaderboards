@@ -1,14 +1,15 @@
 package com.github.kevindagame.database;
+import com.github.kevindagame.DailyLeaderBoards;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.*;
 import java.util.logging.Level;
 
 public abstract class Database {
-    public String table = "daily_leaderboards";
-    JavaPlugin plugin;
+    public String table;
+    DailyLeaderBoards plugin;
     Connection connection;
 
-    public Database(JavaPlugin instance) {
+    public Database(DailyLeaderBoards instance) {
         plugin = instance;
     }
 

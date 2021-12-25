@@ -1,4 +1,5 @@
 package com.github.kevindagame.database;
+import com.github.kevindagame.DailyLeaderBoards;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -10,21 +11,21 @@ import java.sql.Statement;
 import java.util.logging.Level;
 
 public class SQLite extends Database {
-    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS shop_sales (" +
-            "`item_name` varchar(32) NOT NULL," +
-            "`amount` int(5) NOT NULL," +
+    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS " + table + " (" +
+            "`UUID` varchar(32) NOT NULL," +
+            "`score` int(5) NOT NULL," +
             "`transaction_date` DATE NOT NULL," +
             "`sell_price` int(5) NOT NULL," +
             "PRIMARY KEY(item_name,transaction_date)" +
             ");";
     String dbname;
 
-    public SQLite(JavaPlugin instance) {
+    public SQLite(DailyLeaderBoards instance) {
         super(instance);
-        dbname = plugin.getConfig().getString("SQLite.Filename", "shop_sales"); // Set the table name here e.g player_kills
+        dbname = plugin.getPluginConfig().getDatabaseName();
+        table = plugin.getPluginConfig().getTableName();
     }
 
-    // SQL creation stuff, You can leave the blow stuff untouched.
     public Connection getSQLConnection() {
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
