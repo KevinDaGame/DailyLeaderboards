@@ -1,6 +1,5 @@
 package com.github.kevindagame.database;
 import com.github.kevindagame.DailyLeaderBoards;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,21 +10,34 @@ import java.sql.Statement;
 import java.util.logging.Level;
 
 public class SQLite extends Database {
-    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS " + table + " (" +
-            "`UUID` varchar(32) NOT NULL," +
-            "`score` int(5) NOT NULL," +
-            "`transaction_date` DATE NOT NULL," +
-            "`sell_price` int(5) NOT NULL," +
-            "PRIMARY KEY(item_name,transaction_date)" +
-            ");";
+    public String SQLiteCreateTable;
     String dbname;
 
     public SQLite(DailyLeaderBoards instance) {
         super(instance);
         dbname = plugin.getPluginConfig().getDatabaseName();
         table = plugin.getPluginConfig().getTableName();
+        SQLiteCreateTable = """
+                CREATE TABLE IF NOT EXISTS event (
+                  `id` INT NOT NULL,
+                  `start_time` DATETIME NOT NULL,
+                  `end_time` DATETIME NOT NULL,
+                  PRIMARY KEY (`id`));
+
+
+                CREATE TABLE IF NOT EXISTS score (
+                  `UUID` VARCHAR(32) NOT NULL,
+                  `score` INT NOT NULL,
+                  `event_id` INT NOT NULL,
+                  PRIMARY KEY (`UUID`),
+                  CONSTRAINT `fk_score_event`
+                    FOREIGN KEY (`event_id`)
+                    REFERENCES `event` (`id`)
+                    ON DELETE NO ACTION
+                    ON UPDATE NO ACTION)""";
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public Connection getSQLConnection() {
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
@@ -58,7 +70,7 @@ public class SQLite extends Database {
         connection = getSQLConnection();
         try {
             Statement s = connection.createStatement();
-            s.executeUpdate(SQLiteCreateTokensTable);
+            s.executeUpdate(SQLiteCreateTable);
             s.close();
         } catch (SQLException e) {
             e.printStackTrace();

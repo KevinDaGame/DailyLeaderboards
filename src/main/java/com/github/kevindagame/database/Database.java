@@ -1,6 +1,11 @@
 package com.github.kevindagame.database;
+
 import com.github.kevindagame.DailyLeaderBoards;
+import com.github.kevindagame.LeaderBoard;
+import com.github.kevindagame.Score;
+import com.github.kevindagame.events.Event;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.sql.*;
 import java.util.logging.Level;
 
@@ -20,7 +25,7 @@ public abstract class Database {
     public void initialize() {
         connection = getSQLConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table + " WHERE amount = 0");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM event WHERE score = 0");
             ResultSet rs = ps.executeQuery();
             close(ps, rs);
 
@@ -41,5 +46,23 @@ public abstract class Database {
         }
     }
 
+    public void saveEvent(Event currentEvent) {
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = connection.createStatement();
+            LeaderBoard lb = currentEvent.getLeaderBoard();
+            for (Score score : lb.getScores()) {
+                statement.addBatch("INSERT INTO score VALUES(\"" + score.getUuid() + "\", " + score.getScore() + ")" +
+                        " ON CONFLICT(UUID) DO UPDATE SET score = " + score.getScore() + ";");
+            }
+            statement.executeBatch();
+            statement.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
 

@@ -1,6 +1,15 @@
+#valid event-types:
+#   blocks-mined
+#   blocks-placed
+#
+
+#valid extra parameters:
+# event-material: e.g SMOOTH_STONE
+
 'Stone blocks mined':
-    event-type: test1
-'Stone blocks mined1':
-    event-type: test2
-'Stone blocks mined2':
-    event-type: test3
+    event-type: blocks-mined
+    event-material: STONE
+'Grass blocks placed':
+    event-type: blocks-placed
+    event-material: GRASS_BLOCK
+
