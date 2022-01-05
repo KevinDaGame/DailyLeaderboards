@@ -18,6 +18,7 @@ public class BlocksMinedListener implements Listener {
 
     @EventHandler
     public void onBlockMined(BlockBreakEvent e) {
+        System.out.println("block mined");
         if (!e.getBlock().getType().equals(material)) return;
         leaderBoard.addScore(e.getPlayer(), 1);
     }

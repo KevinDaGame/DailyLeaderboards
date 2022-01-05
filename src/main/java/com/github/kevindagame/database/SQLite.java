@@ -19,16 +19,17 @@ public class SQLite extends Database {
         table = plugin.getPluginConfig().getTableName();
         SQLiteCreateTable = """
                 CREATE TABLE IF NOT EXISTS event (
-                  `id` INT NOT NULL,
+                  'name' VARCHAR NOT NULL,
                   `start_time` DATETIME NOT NULL,
                   `end_time` DATETIME NOT NULL,
-                  PRIMARY KEY (`id`));
+                  'is_running' INT NOT NULL
+                  );
 
 
                 CREATE TABLE IF NOT EXISTS score (
+                  `event_id` INT NOT NULL,
                   `UUID` VARCHAR(32) NOT NULL,
                   `score` INT NOT NULL,
-                  `event_id` INT NOT NULL,
                   PRIMARY KEY (`UUID`),
                   CONSTRAINT `fk_score_event`
                     FOREIGN KEY (`event_id`)

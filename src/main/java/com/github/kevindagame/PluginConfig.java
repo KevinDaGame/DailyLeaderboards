@@ -10,6 +10,7 @@ import java.io.IOException;
 public class PluginConfig {
     private final String tableName;
     private final String databaseName;
+    private final int eventDuration;
 
     public PluginConfig(File configFile) {
         FileConfiguration reader = new YamlConfiguration();
@@ -20,7 +21,7 @@ public class PluginConfig {
         }
         this.tableName = reader.getString("table-name");
         this.databaseName = reader.getString("database-name");
-
+        this.eventDuration = reader.getInt("event-duration");
     }
 
     public String getTableName() {
@@ -29,5 +30,9 @@ public class PluginConfig {
 
     public String getDatabaseName() {
         return databaseName;
+    }
+
+    public int getEventDuration() {
+        return eventDuration;
     }
 }

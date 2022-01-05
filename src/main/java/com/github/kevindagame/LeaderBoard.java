@@ -1,15 +1,15 @@
 package com.github.kevindagame;
 
+import com.github.kevindagame.events.Event;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class LeaderBoard {
-    private final String name;
     private List<Score> scores;
-
-    public LeaderBoard(String name) {
-        this.name = name;
+    private final Event event;
+    public LeaderBoard(Event event) {
+        this.event = event;
         this.scores = new ArrayList<>();
     }
 
@@ -33,7 +33,7 @@ public class LeaderBoard {
         return scores;
     }
 
-    public String getName() {
-        return name;
+    public Event getEvent() {
+        return event;
     }
 }

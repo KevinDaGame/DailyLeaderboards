@@ -7,6 +7,35 @@
     <groupId>org.example</groupId>
     <artifactId>DailyLeaderboards</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-files-on-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>D:\Games\Minecraft\server\plugins</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>./target</directory>
+                                    <!--<include>*.[MIME-TYPE]</include>-->
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <repositories>
         <repository>
             <id>spigot-repo</id>
