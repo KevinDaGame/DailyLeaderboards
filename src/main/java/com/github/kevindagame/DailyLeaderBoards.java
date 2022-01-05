@@ -2,7 +2,6 @@ package com.github.kevindagame;
 
 import com.github.kevindagame.database.Database;
 import com.github.kevindagame.database.SQLite;
-import com.github.kevindagame.events.Event;
 import com.github.kevindagame.events.EventsFileHandler;
 import com.github.kevindagame.events.EventsHandler;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,6 +15,7 @@ public class DailyLeaderBoards extends JavaPlugin {
     private PluginConfig config;
     private Database db;
     private EventsHandler eventsHandler;
+
     @Override
     public void onEnable() {
         File configFile = new File(getDataFolder(), "config.yml");
@@ -32,7 +32,7 @@ public class DailyLeaderBoards extends JavaPlugin {
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
         eventsHandler.save();
     }
 

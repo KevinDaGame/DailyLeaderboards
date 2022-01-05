@@ -1,4 +1,5 @@
 package com.github.kevindagame.database;
+
 import com.github.kevindagame.DailyLeaderBoards;
 
 import java.io.File;

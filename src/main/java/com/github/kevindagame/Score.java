@@ -1,8 +1,8 @@
 package com.github.kevindagame;
 
 public class Score {
-    private int score;
     private final String uuid;
+    private int score;
 
     public Score(String uuid) {
         this.uuid = uuid;

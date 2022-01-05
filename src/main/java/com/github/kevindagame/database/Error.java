@@ -1,4 +1,5 @@
 package com.github.kevindagame.database;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;

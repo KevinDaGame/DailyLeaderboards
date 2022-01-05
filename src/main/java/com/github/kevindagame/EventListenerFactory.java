@@ -17,7 +17,7 @@ public class EventListenerFactory {
     public Listener getListener(LeaderBoard leaderboard, String key, FileConfiguration file) {
         Material material;
         var type = file.getString(key + ".event-type");
-        if(type == null) throw new NullArgumentException("The key " + key + " in events.yml has no event-type!");
+        if (type == null) throw new NullArgumentException("The key " + key + " in events.yml has no event-type!");
         switch (type) {
             case ("blocks-mined") -> {
                 material = getMaterial(key, file);
@@ -33,7 +33,8 @@ public class EventListenerFactory {
 
     private Material getMaterial(String key, FileConfiguration file) {
         var materialString = file.getString(key + ".event-material");
-        if(materialString == null) throw new NullArgumentException("The key " + key + " in events.yml requires a material!");
+        if (materialString == null)
+            throw new NullArgumentException("The key " + key + " in events.yml requires a material!");
         var material = Material.getMaterial(materialString);
         if (material == null) {
             error.error(key, "An invalid material was specified");

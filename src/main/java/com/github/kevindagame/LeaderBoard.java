@@ -3,11 +3,13 @@ package com.github.kevindagame;
 import com.github.kevindagame.events.Event;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderBoard {
-    private List<Score> scores;
     private final Event event;
+    private final List<Score> scores;
+
     public LeaderBoard(Event event) {
         this.event = event;
         this.scores = new ArrayList<>();
