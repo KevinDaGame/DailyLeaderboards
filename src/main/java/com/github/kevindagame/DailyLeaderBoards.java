@@ -1,5 +1,8 @@
 package com.github.kevindagame;
 
+import com.github.kevindagame.Command.CommandModule;
+import com.github.kevindagame.Command.CommandModuleFactory;
+import com.github.kevindagame.Command.DailyLeaderBoardsCommand;
 import com.github.kevindagame.database.Database;
 import com.github.kevindagame.database.SQLite;
 import com.github.kevindagame.events.EventsFileHandler;
@@ -9,15 +12,20 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class DailyLeaderBoards extends JavaPlugin {
     private EventsFileHandler eventsFileHandler;
     private PluginConfig config;
     private Database db;
     private EventsHandler eventsHandler;
+    public static DailyLeaderBoards plugin;
 
+    public static HashMap<String, CommandModule> commands;
     @Override
     public void onEnable() {
+        plugin = this;
+        plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules()));
         File configFile = new File(getDataFolder(), "config.yml");
         if (!configFile.exists()) saveResource(configFile.getName(), false);
         config = new PluginConfig(configFile);
@@ -34,6 +42,8 @@ public class DailyLeaderBoards extends JavaPlugin {
     @Override
     public void onDisable() {
         eventsHandler.save();
+        plugin = null;
+        commands.clear();
     }
 
     public PluginConfig getPluginConfig() {
