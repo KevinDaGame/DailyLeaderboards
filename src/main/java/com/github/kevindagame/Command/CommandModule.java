@@ -3,6 +3,8 @@ package com.github.kevindagame.Command;
 import com.github.kevindagame.DailyLeaderBoards;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 public abstract class CommandModule
 {
     private String label;
@@ -36,4 +38,6 @@ public abstract class CommandModule
 
     //This method will process the command.
     public abstract boolean run(CommandSender sender, String[] args);
+
+    public abstract List<String> tabComplete();
 }
