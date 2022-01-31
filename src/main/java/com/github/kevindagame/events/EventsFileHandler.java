@@ -5,6 +5,8 @@ import com.github.kevindagame.LeaderBoard;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class EventsFileHandler {
@@ -33,5 +35,11 @@ public class EventsFileHandler {
         if (listener == null) return null;
         event.setListener(listener);
         return event;
+    }
+
+    public List<String> getAllEventNames() {
+        List<String> list = new ArrayList<>();
+        list.addAll(file.getKeys(false));
+        return list;
     }
 }

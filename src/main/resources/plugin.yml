@@ -4,6 +4,14 @@ main: com.github.kevindagame.DailyLeaderBoards
 api-version: 1.16
 author: KevinDaGame
 description: new leaderboard every day!
+permissions:
+  dailyleaderboards.*:
+    description: All permissions
+    default: op
+    children:
+      dailyleaderboards.help:
+        description: Get help for the plugin
+
 commands:
   dailyleaderboards:
     aliases: [dlb]

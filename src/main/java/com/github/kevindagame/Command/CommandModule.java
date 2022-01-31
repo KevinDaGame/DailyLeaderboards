@@ -1,27 +1,36 @@
 package com.github.kevindagame.Command;
 
 import com.github.kevindagame.DailyLeaderBoards;
+import com.github.kevindagame.Permission;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
 public abstract class CommandModule
 {
-    private String label;
-    private int minArgs;
-    private int maxArgs;
+    private final String label;
+    private final int minArgs;
+    private final int maxArgs;
+    private final Permission permission;
+    protected final DailyLeaderBoards dailyLeaderBoards;
 
     /**
      * @param label - The label of the command.
      * @param minArgs - The minimum amount of arguments.
      * @param maxArgs - The maximum amount of arguments.
      */
-    public CommandModule(String label, int minArgs, int maxArgs)
+    public CommandModule(DailyLeaderBoards dailyLeaderBoards, String label, int minArgs, int maxArgs, Permission permission)
     {
+        this.dailyLeaderBoards = dailyLeaderBoards;
         this.label = label;
         this.minArgs = minArgs;
         this.maxArgs = maxArgs;
+        this.permission = permission;
 
+    }
+
+    public Permission getPermission() {
+        return permission;
     }
 
     public String getLabel() {

@@ -3,6 +3,7 @@ package com.github.kevindagame;
 import com.github.kevindagame.Command.CommandModule;
 import com.github.kevindagame.Command.CommandModuleFactory;
 import com.github.kevindagame.Command.DailyLeaderBoardsCommand;
+import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.database.Database;
 import com.github.kevindagame.database.SQLite;
 import com.github.kevindagame.events.EventsFileHandler;
@@ -25,7 +26,8 @@ public class DailyLeaderBoards extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules()));
+        Message.load();
+        plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules(this)));
         File configFile = new File(getDataFolder(), "config.yml");
         if (!configFile.exists()) saveResource(configFile.getName(), false);
         config = new PluginConfig(configFile);
@@ -37,6 +39,10 @@ public class DailyLeaderBoards extends JavaPlugin {
         this.db = new SQLite(this);
         this.db.load();
         eventsHandler = new EventsHandler(this);
+    }
+
+    public static void log(String message) {
+        plugin.getLogger().info(message);
     }
 
     @Override
@@ -56,5 +62,9 @@ public class DailyLeaderBoards extends JavaPlugin {
 
     public EventsFileHandler getEventsFileHandler() {
         return eventsFileHandler;
+    }
+
+    public EventsHandler getEventsHandler() {
+        return eventsHandler;
     }
 }

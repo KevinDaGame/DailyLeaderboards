@@ -19,6 +19,7 @@ public class Event {
     private final String name;
     private Database database;
     private int saveTask;
+    private int endTask;
 
     public Event(String name) {
         this.name = name;
@@ -95,5 +96,13 @@ public class Event {
         if (database == null)
             throw new NullPointerException("The database has failed to load, and this event can therefore not be saved!");
         database.saveEvent(this);
+    }
+
+    public void setEndTask(int scheduleSyncDelayedTask) {
+        endTask = scheduleSyncDelayedTask;
+    }
+
+    public int getEndTask() {
+        return endTask;
     }
 }

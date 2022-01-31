@@ -8,31 +8,48 @@ import java.io.File;
 import java.io.IOException;
 
 public class PluginConfig {
-    private final String tableName;
-    private final String databaseName;
-    private final int eventDuration;
-
+    private final FileConfiguration reader;
+    private final File configFile;
     public PluginConfig(File configFile) {
-        FileConfiguration reader = new YamlConfiguration();
+        reader = new YamlConfiguration();
+        this.configFile = configFile;
+
         try {
             reader.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
-        this.tableName = reader.getString("table-name");
-        this.databaseName = reader.getString("database-name");
-        this.eventDuration = reader.getInt("event-duration");
     }
 
     public String getTableName() {
-        return tableName;
+        return reader.getString("table-name");
     }
 
     public String getDatabaseName() {
-        return databaseName;
+        return reader.getString("database-name");
     }
 
     public int getEventDuration() {
-        return eventDuration;
+        return reader.getInt("event-duration");
+    }
+
+    public void disableAutoRun() {
+        reader.set("auto-run", false);
+        save();
+    }
+    private void save(){
+        try {
+            reader.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void enableAutoRun() {
+        reader.set("auto-run", true);
+        save();
+    }
+
+    public boolean getAutoRun(){
+        return reader.getBoolean("auto-run");
     }
 }

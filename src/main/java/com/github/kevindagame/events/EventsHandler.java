@@ -1,6 +1,7 @@
 package com.github.kevindagame.events;
 
 import com.github.kevindagame.DailyLeaderBoards;
+import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
 
@@ -18,37 +19,52 @@ public class EventsHandler {
         this.plugin = plugin;
         this.database = plugin.getDataBase();
         this.eventsFileHandler = plugin.getEventsFileHandler();
-        loadEvent();
+        if(plugin.getPluginConfig().getAutoRun()){
+            load();
+        }
+
+    }
+    //only called on first plugin load. This method checks if there is an existing event, and if there isnt it creates and starts a new one
+    private void load() {
+
+        if (loadExistingEvent()) return;
+        createNewRandomEvent();
 
     }
 
-    private void loadEvent() {
-
-        if (loadExistingEvent()) return;
-
+    private void createNewRandomEvent() {
         Event event = eventsFileHandler.getRandomEvent();
+        event = createNewEvent(event);
+        startEvent(event);
+    }
+
+    //Create a new event. it takes an event from the filehandler
+    public Event createNewEvent(Event event) throws UnsupportedOperationException {
+        if(currentEvent != null){
+            throw new UnsupportedOperationException("There is already an active event!");
+        }
         Timestamp currentDate = new Timestamp(System.currentTimeMillis());
         event.setStartTime(currentDate);
-        //Add the hours in config to end date converte
+        //Add the hours in config to end date converter
         // d to ms
         Timestamp endDate = new Timestamp(System.currentTimeMillis() + plugin.getPluginConfig().getEventDuration() * 3600000L);
         System.out.println(endDate);
         event.setEndTime(endDate);
         try {
             event = database.createEvent(event);
-            startEvent(event);
+            return event;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             plugin.getPluginLoader().disablePlugin(plugin);
+            return null;
         }
-
-
     }
 
-    private void startEvent(Event event) {
+    public void startEvent(Event event) {
         this.currentEvent = event;
         plugin.getServer().getPluginManager().registerEvents(currentEvent.getListener(), plugin);
         event.startAutoSave(plugin);
+        Message.START_EVENT_BROADCAST.broadcast(event.getName());
         scheduleEventEnd(event);
     }
 
@@ -59,7 +75,10 @@ public class EventsHandler {
             return;
         }
         System.out.println(timeToGo + "ms remaining");
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> endEvent(event), timeToGo / 50);
+        event.setEndTask(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            endEvent(event);
+            createNewRandomEvent();
+        }, timeToGo / 50));
     }
 
     private boolean loadExistingEvent() {
@@ -83,13 +102,17 @@ public class EventsHandler {
         return false;
     }
 
+    public void endCurrentEvent(){
+        Bukkit.getScheduler().cancelTask(currentEvent.getEndTask());
+        endEvent(currentEvent);
+    }
+
     private void endEvent(Event event) {
-        Bukkit.broadcastMessage("The event with the name " + event.getName() + " and id " + event.getId() + "has ended");
+        Message.STOP_EVENT_BROADCAST.broadcast(event.getName());
         event.stopSaving();
         database.endEvent(event);
+        currentEvent = null;
         //TODO handle rewards here
-
-        loadEvent();
     }
 
     public Event getCurrentEvent() {
@@ -98,5 +121,9 @@ public class EventsHandler {
 
     public void save() {
         currentEvent.save();
+    }
+
+    public boolean isRunning() {
+        return currentEvent != null;
     }
 }

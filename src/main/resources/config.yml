@@ -2,3 +2,4 @@ table-name: daily_leaderboard
 database-name: daily_leaderboards
 #event duration in hours
 event-duration: 24
+auto-run: false
