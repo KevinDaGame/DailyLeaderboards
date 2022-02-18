@@ -18,7 +18,7 @@ public class LeaderBoard {
     public void addScore(Player player, int amount) {
         var score = getScore(player.getUniqueId().toString());
         if (score == null) {
-            score = new Score(player.getUniqueId().toString());
+            score = new Score(player.getUniqueId().toString(), player.getName());
             scores.add(score);
         }
         score.addScore(amount);

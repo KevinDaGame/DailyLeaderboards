@@ -24,7 +24,17 @@ public enum Message {
     STOP_EVENT_BROADCAST,
     START_EVENT_TIMER_BROADCAST,
     STOP_EVENT_MESSAGE,
-    AUTORUN_DISABLED_ERROR;
+    AUTORUN_DISABLED_ERROR,
+    LEADERBOARD_RANK,
+    LEADERBOARD_RANK_NO_CURRENT_EVENT,
+    LEADERBOARD_HEADER,
+    LEADERBOARD_HEADER_NO_CURRENT_EVENT,
+    LEADERBOARD_INVALID_VALUE,
+    LEADERBOARD_RANK_NO_PLAYER,
+
+
+    ;
+
 
     private static final DailyLeaderBoards plugin = DailyLeaderBoards.getPlugin(DailyLeaderBoards.class);
     private MessageContainer message;
@@ -53,6 +63,10 @@ public enum Message {
 
     public void send(CommandSender sender, Object... objects) {
         sender.sendMessage(Message.replaceArgs(message.getMessage(), objects));
+    }
+
+    public String getMessage(Object... objects) {
+        return Message.replaceArgs(message.getMessage(), objects);
     }
 
     public void broadcast(Object... objects){
