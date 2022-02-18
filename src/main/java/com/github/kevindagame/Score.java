@@ -3,9 +3,11 @@ package com.github.kevindagame;
 public class Score {
     private final String uuid;
     private int score;
-
-    public Score(String uuid) {
+    private String name;
+    public Score(String uuid, String name) {
         this.uuid = uuid;
+        this.name = name;
+
     }
 
     public int getScore() {
@@ -18,5 +20,9 @@ public class Score {
 
     public void addScore(int amount) {
         score += amount;
+    }
+
+    public Object getName() {
+        return name;
     }
 }
