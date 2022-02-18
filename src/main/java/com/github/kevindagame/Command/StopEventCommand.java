@@ -15,9 +15,9 @@ public class StopEventCommand extends CommandModule {
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        dailyLeaderBoards.getPluginConfig().disableAutoRun();
-        if (dailyLeaderBoards.getEventsHandler().isRunning()) {
-            dailyLeaderBoards.getEventsHandler().endCurrentEvent();
+        plugin.getPluginConfig().disableAutoRun();
+        if (plugin.getEventsHandler().isRunning()) {
+            plugin.getEventsHandler().endCurrentEvent();
         }
         Message.STOP_EVENT_MESSAGE.send(sender);
         return true;

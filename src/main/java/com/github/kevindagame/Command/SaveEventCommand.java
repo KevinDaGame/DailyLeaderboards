@@ -15,8 +15,8 @@ public class SaveEventCommand extends CommandModule{
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        if(dailyLeaderBoards.getEventsHandler() != null){
-            var eventHandler = dailyLeaderBoards.getEventsHandler();
+        if(plugin.getEventsHandler() != null){
+            var eventHandler = plugin.getEventsHandler();
             if (eventHandler.getCurrentEvent() != null) {
                 eventHandler.save();
                 Message.SAVE_EVENT_MESSAGE.send(sender, eventHandler.getCurrentEvent().getName());

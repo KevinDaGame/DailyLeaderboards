@@ -17,11 +17,11 @@ public class NextEventCommand extends CommandModule {
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        if(!dailyLeaderBoards.getPluginConfig().getAutoRun()){
+        if(!plugin.getPluginConfig().getAutoRun()){
             Message.AUTORUN_DISABLED_ERROR.send(sender);
         }
-        var eventsHandler = dailyLeaderBoards.getEventsHandler();
-        var eventsFileHandler = dailyLeaderBoards.getEventsFileHandler();
+        var eventsHandler = plugin.getEventsHandler();
+        var eventsFileHandler = plugin.getEventsFileHandler();
         Event event = null;
         if (args.length == 1) {
             event = eventsFileHandler.getEvent(args[0]);
@@ -39,7 +39,7 @@ public class NextEventCommand extends CommandModule {
             event = eventsFileHandler.getRandomEvent();
         }
         var newEvent = eventsHandler.createNewEvent(event);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(dailyLeaderBoards, () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             eventsHandler.startEvent(newEvent);
             //TODO what if server crashes during this time?
         }, 200);
@@ -48,6 +48,6 @@ public class NextEventCommand extends CommandModule {
 
     @Override
     public List<String> tabComplete() {
-        return dailyLeaderBoards.getEventsFileHandler().getAllEventNames();
+        return plugin.getEventsFileHandler().getAllEventNames();
     }
 }
