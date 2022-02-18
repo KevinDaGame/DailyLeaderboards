@@ -1,7 +1,8 @@
-package com.github.kevindagame.events;
+package com.github.kevindagame.Command.events;
 
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
+import com.github.kevindagame.TimeFormatter;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
 
@@ -47,7 +48,7 @@ public class EventsHandler {
         event.setStartTime(currentDate);
         //Add the hours in config to end date converter
         // d to ms
-        Timestamp endDate = new Timestamp(System.currentTimeMillis() + plugin.getPluginConfig().getEventDuration() * 3600000L);
+        Timestamp endDate = new Timestamp(System.currentTimeMillis() + TimeFormatter.deformatTimeRemaining(plugin.getPluginConfig().getEventDuration()));
         System.out.println(endDate);
         event.setEndTime(endDate);
         try {
@@ -109,7 +110,7 @@ public class EventsHandler {
 
     private void endEvent(Event event) {
         Message.STOP_EVENT_BROADCAST.broadcast(event.getName());
-        event.stopSaving();
+        event.stop();
         database.endEvent(event);
         currentEvent = null;
         //TODO handle rewards here

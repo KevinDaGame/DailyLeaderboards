@@ -3,13 +3,14 @@
 #   blocks-placed
 #
 
+#Can't contain spaces!!!!!!
 #valid extra parameters:
 # event-material: e.g SMOOTH_STONE
 
-'Stone blocks mined':
+'Stone-blocks-mined':
   event-type: blocks-mined
   event-material: STONE
-'Grass blocks placed':
+'Grass-blocks-placed':
   event-type: blocks-placed
   event-material: GRASS_BLOCK
 

@@ -29,8 +29,8 @@ public class PluginConfig {
         return reader.getString("database-name");
     }
 
-    public int getEventDuration() {
-        return reader.getInt("event-duration");
+    public String getEventDuration() {
+        return reader.getString("event-duration");
     }
 
     public void disableAutoRun() {

@@ -12,3 +12,4 @@ AUTORUN_DISABLED_ERROR: "Autorun is disabled. Please use the start subcommand to
 START_EVENT_BROADCAST: "The event {0} has started!"
 STOP_EVENT_BROADCAST: "The event {0} has ended!"
 START_EVENT_TIMER_BROADCAST: "The event {0} will start in {1}!"
+SAVE_EVENT_MESSAGE: "The event {0} has been saved"

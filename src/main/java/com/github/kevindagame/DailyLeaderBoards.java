@@ -6,8 +6,9 @@ import com.github.kevindagame.Command.DailyLeaderBoardsCommand;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.database.Database;
 import com.github.kevindagame.database.SQLite;
-import com.github.kevindagame.events.EventsFileHandler;
-import com.github.kevindagame.events.EventsHandler;
+import com.github.kevindagame.Command.events.EventsFileHandler;
+import com.github.kevindagame.Command.events.EventsHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,11 +24,15 @@ public class DailyLeaderBoards extends JavaPlugin {
     public static DailyLeaderBoards plugin;
 
     public static HashMap<String, CommandModule> commands;
+
     @Override
     public void onEnable() {
         plugin = this;
         Message.load();
         plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules(this)));
+        if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+
+        }
         File configFile = new File(getDataFolder(), "config.yml");
         if (!configFile.exists()) saveResource(configFile.getName(), false);
         config = new PluginConfig(configFile);
@@ -47,9 +52,13 @@ public class DailyLeaderBoards extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        eventsHandler.save();
+        if (eventsHandler != null) {
+            eventsHandler.save();
+        }
         plugin = null;
-        commands.clear();
+        if (commands != null) {
+            commands.clear();
+        }
     }
 
     public PluginConfig getPluginConfig() {

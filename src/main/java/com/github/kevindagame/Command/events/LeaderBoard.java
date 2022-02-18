@@ -1,6 +1,6 @@
-package com.github.kevindagame;
+package com.github.kevindagame.Command.events;
 
-import com.github.kevindagame.events.Event;
+import com.github.kevindagame.Score;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

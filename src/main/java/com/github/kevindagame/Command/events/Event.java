@@ -1,8 +1,8 @@
-package com.github.kevindagame.events;
+package com.github.kevindagame.Command.events;
 
-import com.github.kevindagame.LeaderBoard;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -93,8 +93,10 @@ public class Event {
     }
 
     public void save() {
-        if (database == null)
-            throw new NullPointerException("The database has failed to load, and this event can therefore not be saved!");
+        if (database == null){
+//            throw new NullPointerException("The database has failed to load, and this event can therefore not be saved!");
+            return;
+        }
         database.saveEvent(this);
     }
 
@@ -104,5 +106,15 @@ public class Event {
 
     public int getEndTask() {
         return endTask;
+    }
+
+    public long getTimeRemaining() {
+        return endTime.getTime() - System.currentTimeMillis();
+    }
+
+    public void stop() {
+        Bukkit.getScheduler().cancelTask(saveTask);
+        save();
+        HandlerList.unregisterAll(listener);
     }
 }

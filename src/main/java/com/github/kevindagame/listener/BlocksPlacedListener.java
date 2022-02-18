@@ -1,6 +1,6 @@
 package com.github.kevindagame.listener;
 
-import com.github.kevindagame.LeaderBoard;
+import com.github.kevindagame.Command.events.LeaderBoard;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,9 +1,9 @@
 package com.github.kevindagame.database;
 
 import com.github.kevindagame.DailyLeaderBoards;
-import com.github.kevindagame.LeaderBoard;
+import com.github.kevindagame.Command.events.LeaderBoard;
 import com.github.kevindagame.Score;
-import com.github.kevindagame.events.Event;
+import com.github.kevindagame.Command.events.Event;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -54,6 +54,9 @@ public abstract class Database {
             LeaderBoard lb = currentEvent.getLeaderBoard();
             for (Score score : lb.getScores()) {
                 statement.addBatch("INSERT INTO score VALUES( " + currentEvent.getId() + ", \"" + score.getUuid() + "\", " + score.getScore() + ")" +
+                        " ON CONFLICT(event_id, UUID) DO UPDATE SET score = " + score.getScore() + ";");
+                System.out.println("Saving for " + score.getUuid());
+                System.out.println("INSERT INTO score VALUES( " + currentEvent.getId() + ", \"" + score.getUuid() + "\", " + score.getScore() + ")" +
                         " ON CONFLICT(UUID) DO UPDATE SET score = " + score.getScore() + ";");
             }
             statement.executeBatch();

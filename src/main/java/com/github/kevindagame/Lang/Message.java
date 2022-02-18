@@ -19,7 +19,7 @@ public enum Message {
     TOO_MANY_ARGUMENTS_ERROR,
     TOO_FEW_ARGUMENTS_ERROR,
     NO_PERMISSION_ERROR,
-
+    SAVE_EVENT_MESSAGE,
     START_EVENT_BROADCAST,
     STOP_EVENT_BROADCAST,
     START_EVENT_TIMER_BROADCAST,
@@ -40,7 +40,7 @@ public enum Message {
             String langMessage = lang.getString(message.name());
             if (langMessage == null) {
                 plugin.getLogger().warning("Unable to load message " + message.name() + ". Please make sure it exists in the lang file.");
-                langMessage = "Error when loading. Please contact an admin";
+                langMessage = "Error when loading message. Please contact an admin";
             }
             message.setMessage(new RawMessage(message.name(), ChatColor.translateAlternateColorCodes('&', langMessage)));
         }

@@ -31,7 +31,7 @@ public class SQLite extends Database {
                   `event_id` INT NOT NULL,
                   `UUID` VARCHAR(32) NOT NULL,
                   `score` INT NOT NULL,
-                  PRIMARY KEY (`UUID`),
+                  PRIMARY KEY (`event_id`, `UUID`),
                   CONSTRAINT `fk_score_event`
                     FOREIGN KEY (`event_id`)
                     REFERENCES `event` (`id`)

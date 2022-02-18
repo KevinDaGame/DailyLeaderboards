@@ -14,6 +14,7 @@ public class CommandModuleFactory {
         commandModules.put("stop", new StopEventCommand(dailyLeaderBoards));
         commandModules.put("start", new StartEventCommand(dailyLeaderBoards));
         commandModules.put("status", new StatusEventCommand(dailyLeaderBoards));
+        commandModules.put("save", new SaveEventCommand(dailyLeaderBoards));
         return commandModules;
     }
 }
