@@ -15,7 +15,7 @@ public class StatusEventCommand extends CommandModule{
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        var event = dailyLeaderBoards.getEventsHandler().getCurrentEvent();
+        var event = plugin.getEventsHandler().getCurrentEvent();
 
         if(event == null){
             Message.NO_CURRENT_EVENT_ERROR.send(sender);

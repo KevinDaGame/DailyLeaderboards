@@ -12,7 +12,7 @@ public abstract class CommandModule
     private final int minArgs;
     private final int maxArgs;
     private final Permission permission;
-    protected final DailyLeaderBoards dailyLeaderBoards;
+    protected final DailyLeaderBoards plugin;
 
     /**
      * @param label - The label of the command.
@@ -21,7 +21,7 @@ public abstract class CommandModule
      */
     public CommandModule(DailyLeaderBoards dailyLeaderBoards, String label, int minArgs, int maxArgs, Permission permission)
     {
-        this.dailyLeaderBoards = dailyLeaderBoards;
+        this.plugin = dailyLeaderBoards;
         this.label = label;
         this.minArgs = minArgs;
         this.maxArgs = maxArgs;

@@ -16,9 +16,9 @@ public class StartEventCommand extends CommandModule{
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        var eventsHandler = dailyLeaderBoards.getEventsHandler();
-        var eventsFileHandler = dailyLeaderBoards.getEventsFileHandler();
-        dailyLeaderBoards.getPluginConfig().enableAutoRun();
+        var eventsHandler = plugin.getEventsHandler();
+        var eventsFileHandler = plugin.getEventsFileHandler();
+        plugin.getPluginConfig().enableAutoRun();
         Event event = null;
         if (args.length == 1) {
             event = eventsFileHandler.getEvent(args[0]);
@@ -41,6 +41,6 @@ public class StartEventCommand extends CommandModule{
 
     @Override
     public List<String> tabComplete() {
-        return dailyLeaderBoards.getEventsFileHandler().getAllEventNames();
+        return plugin.getEventsFileHandler().getAllEventNames();
     }
 }

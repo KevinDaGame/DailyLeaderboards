@@ -82,4 +82,8 @@ public class DailyLeaderBoards extends JavaPlugin {
     public EventsHandler getEventsHandler() {
         return eventsHandler;
     }
+
+    public void reloadLang() {
+        Message.load();
+    }
 }
