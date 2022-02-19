@@ -1,6 +1,6 @@
 package com.github.kevindagame;
 
-import com.github.kevindagame.Command.events.LeaderBoard;
+import com.github.kevindagame.events.LeaderBoard;
 import com.github.kevindagame.listener.BlocksMinedListener;
 import com.github.kevindagame.listener.BlocksPlacedListener;
 import org.apache.commons.lang.NullArgumentException;

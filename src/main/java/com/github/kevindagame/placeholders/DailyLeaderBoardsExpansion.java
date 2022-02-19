@@ -1,15 +1,13 @@
 package com.github.kevindagame.placeholders;
 
-import com.github.kevindagame.Command.events.Event;
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Score;
+import com.github.kevindagame.events.Event;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
     private final DailyLeaderBoards plugin;
@@ -38,45 +36,39 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         String[] newParams = params.split("_");
 
         if (newParams[0].equals("header") && newParams.length == 2) {
-            if (!isValidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
-            if (Integer.valueOf(newParams[1]) == 0) {
+            if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+            if (Integer.parseInt(newParams[1]) == 0) {
+                if(plugin.getEventsHandler().getCurrentEvent() == null) return Message.LEADERBOARD_HEADER_NO_EVENT.getMessage();
                 return Message.LEADERBOARD_HEADER.getMessage(plugin.getEventsHandler().getCurrentEvent().getName());
             }
         }
 
         if (newParams[0].equals("rank") && newParams.length == 3) {
-            if (!isValidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+            if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
             Event event = null;
-            if (Integer.valueOf(newParams[1]) == 0) {
+            if (Integer.parseInt(newParams[1]) == 0) {
                 event = plugin.getEventsHandler().getCurrentEvent();
             }
             if (event == null) {
-                return Message.LEADERBOARD_RANK_NO_CURRENT_EVENT.getMessage();
+                return Message.LEADERBOARD_RANK_NO_EVENT.getMessage();
             }
-            var leaderboard = event.getLeaderBoard().getScores().stream().sorted(Comparator.comparingInt(Score::getScore).reversed()).collect(Collectors.toList());
-            if(leaderboard.size() < Integer.valueOf(newParams[2]) + 1){
+            var leaderboard = event.getLeaderBoard().getScores().stream().sorted(Comparator.comparingInt(Score::getScore).reversed()).toList();
+            if(leaderboard.size() < Integer.parseInt(newParams[2]) + 1){
                 return Message.LEADERBOARD_RANK_NO_PLAYER.getMessage();
             }
-            var score = leaderboard.get(Integer.valueOf(newParams[2]));
-            return Message.LEADERBOARD_RANK.getMessage(Integer.valueOf(newParams[2]) + 1, score.getName(), score.getScore());
+            var score = leaderboard.get(Integer.parseInt(newParams[2]));
+            return Message.LEADERBOARD_RANK.getMessage(Integer.parseInt(newParams[2]) + 1, score.getName(), score.getScore());
 
         }
         return Message.LEADERBOARD_INVALID_VALUE.getMessage();
     }
 
-    private boolean isValidInt(String string) {
+    private boolean isinvalidInt(String string) {
         var charArr = string.toCharArray();
         for (char c : charArr) {
-            if (!Character.isDigit(c)) return false;
+            if (!Character.isDigit(c)) return true;
         }
-        return true;
-    }
-
-    private String replace(String toReplace, String word) {
-        String replaced = toReplace.replace(word, "");
-        if (replaced.startsWith("_")) return replaced.substring(1);
-        return replaced;
-
+        return false;
     }
 
     @Override

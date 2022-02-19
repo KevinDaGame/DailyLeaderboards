@@ -11,8 +11,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 
 public class SQLite extends Database {
-    public String SQLiteCreateTable;
-    String dbname;
+    public final String SQLiteCreateTable;
+    final String dbname;
 
     public SQLite(DailyLeaderBoards instance) {
         super(instance);

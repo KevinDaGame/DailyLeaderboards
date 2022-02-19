@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 
 public enum Message {
+    PREFIX,
     TEST_MESSAGE,
     TEST2_MESSAGE,
     STATUS_EVENT_MESSAGE,
@@ -26,9 +27,9 @@ public enum Message {
     STOP_EVENT_MESSAGE,
     AUTORUN_DISABLED_ERROR,
     LEADERBOARD_RANK,
-    LEADERBOARD_RANK_NO_CURRENT_EVENT,
+    LEADERBOARD_RANK_NO_EVENT,
     LEADERBOARD_HEADER,
-    LEADERBOARD_HEADER_NO_CURRENT_EVENT,
+    LEADERBOARD_HEADER_NO_EVENT,
     LEADERBOARD_INVALID_VALUE,
     LEADERBOARD_RANK_NO_PLAYER,
     LANG_RELOADED,
@@ -64,7 +65,7 @@ public enum Message {
     }
 
     public void send(CommandSender sender, Object... objects) {
-        sender.sendMessage(Message.replaceArgs(message.getMessage(), objects));
+        sender.sendMessage(PREFIX.getMessage() + " " + Message.replaceArgs(message.getMessage(), objects));
     }
 
     public String getMessage(Object... objects) {
@@ -72,7 +73,7 @@ public enum Message {
     }
 
     public void broadcast(Object... objects){
-        Bukkit.broadcastMessage(Message.replaceArgs(message.getMessage(), objects));
+        Bukkit.broadcastMessage(PREFIX.getMessage() + " " + Message.replaceArgs(message.getMessage(), objects));
     }
 
     private static String replaceArgs(String msg, Object... objects) {

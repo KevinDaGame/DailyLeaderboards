@@ -1,4 +1,4 @@
-package com.github.kevindagame.Command.events;
+package com.github.kevindagame.events;
 
 import com.github.kevindagame.EventListenerFactory;
 import org.bukkit.configuration.file.FileConfiguration;

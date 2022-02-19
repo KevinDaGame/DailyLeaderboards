@@ -1,5 +1,6 @@
-package com.github.kevindagame.Command.events;
+package com.github.kevindagame.events;
 
+import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -27,7 +28,6 @@ public class Event {
 
     public void startAutoSave(JavaPlugin plugin) {
         saveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            System.out.println("Saving leaderboard...");
             save();
         }, 1200, 1200);
     }
@@ -98,6 +98,7 @@ public class Event {
             return;
         }
         database.saveEvent(this);
+        DailyLeaderBoards.log("Saving leaderboard...");
     }
 
     public void setEndTask(int scheduleSyncDelayedTask) {
