@@ -1,4 +1,4 @@
-package com.github.kevindagame.Command.events;
+package com.github.kevindagame.events;
 
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 public class EventsHandler {
 
@@ -49,7 +50,6 @@ public class EventsHandler {
         //Add the hours in config to end date converter
         // d to ms
         Timestamp endDate = new Timestamp(System.currentTimeMillis() + TimeFormatter.deformatTimeRemaining(plugin.getPluginConfig().getEventDuration()));
-        System.out.println(endDate);
         event.setEndTime(endDate);
         try {
             event = database.createEvent(event);
@@ -75,7 +75,6 @@ public class EventsHandler {
             endEvent(event);
             return;
         }
-        System.out.println(timeToGo + "ms remaining");
         event.setEndTask(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             endEvent(event);
             createNewRandomEvent();
@@ -87,9 +86,14 @@ public class EventsHandler {
         try {
             if (runningEvent.next()) {
                 Event event = eventsFileHandler.getEvent(runningEvent.getString("name"));
+                event.setDatabase(database);
                 event.setStartTime(runningEvent.getTimestamp("start_time"));
                 event.setEndTime(runningEvent.getTimestamp("end_time"));
                 event.setId(runningEvent.getInt("rowid"));
+                var leaderboard = database.getLeaderBoard(event.getId());
+                while(leaderboard.next()){
+                    event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
+                }
                 if (event.shouldBeRunning()) {
                     startEvent(event);
                     return true;

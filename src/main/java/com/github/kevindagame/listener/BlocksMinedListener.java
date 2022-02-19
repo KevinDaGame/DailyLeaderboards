@@ -1,6 +1,6 @@
 package com.github.kevindagame.listener;
 
-import com.github.kevindagame.Command.events.LeaderBoard;
+import com.github.kevindagame.events.LeaderBoard;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +18,6 @@ public class BlocksMinedListener implements Listener {
 
     @EventHandler
     public void onBlockMined(BlockBreakEvent e) {
-        System.out.println("block mined");
         if (!e.getBlock().getType().equals(material)) return;
         leaderBoard.addScore(e.getPlayer(), 1);
     }

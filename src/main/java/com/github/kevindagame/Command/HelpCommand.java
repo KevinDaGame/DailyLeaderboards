@@ -4,7 +4,6 @@ import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Permission;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HelpCommand extends CommandModule {

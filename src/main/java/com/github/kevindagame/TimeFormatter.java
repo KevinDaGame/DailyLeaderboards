@@ -1,6 +1,5 @@
 package com.github.kevindagame;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 
 public class TimeFormatter {
@@ -13,9 +12,9 @@ public class TimeFormatter {
         String[] split = HHMMSS.split(":");
         if(split.length != 3) throw new IllegalArgumentException("The given string is invalid! String: " + HHMMSS);
         long miliseconds = 0;
-        miliseconds += Long.valueOf(split[0]) * HOUR;
-        miliseconds += Long.valueOf(split[1]) * MINUTE;
-        miliseconds += Long.valueOf(split[2]) * SECOND;
+        miliseconds += Long.parseLong(split[0]) * HOUR;
+        miliseconds += Long.parseLong(split[1]) * MINUTE;
+        miliseconds += Long.parseLong(split[2]) * SECOND;
         return miliseconds;
     }
 

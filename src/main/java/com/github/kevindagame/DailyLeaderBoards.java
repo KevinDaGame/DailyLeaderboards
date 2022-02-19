@@ -6,8 +6,8 @@ import com.github.kevindagame.Command.DailyLeaderBoardsCommand;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.database.Database;
 import com.github.kevindagame.database.SQLite;
-import com.github.kevindagame.Command.events.EventsFileHandler;
-import com.github.kevindagame.Command.events.EventsHandler;
+import com.github.kevindagame.events.EventsFileHandler;
+import com.github.kevindagame.events.EventsHandler;
 import com.github.kevindagame.placeholders.DailyLeaderBoardsExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +16,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class DailyLeaderBoards extends JavaPlugin {
@@ -33,11 +34,8 @@ public class DailyLeaderBoards extends JavaPlugin {
         Message.load();
         plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules(this)));
         if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
-            System.out.println(ChatColor.translateAlternateColorCodes('&', "&cFound PAPI UWU"));
             new DailyLeaderBoardsExpansion(this).register();
-        }
-        else{
-            System.out.println(ChatColor.translateAlternateColorCodes('&', "&cDidn't find PAPI UWU"));
+            DailyLeaderBoards.log("Succesfully loaded placeholders");
         }
         File configFile = new File(getDataFolder(), "config.yml");
         if (!configFile.exists()) saveResource(configFile.getName(), false);
@@ -58,6 +56,13 @@ public class DailyLeaderBoards extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        try {
+            if(getDataBase() != null){
+                getDataBase().getSQLConnection().close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         if (eventsHandler != null) {
             eventsHandler.save();
         }

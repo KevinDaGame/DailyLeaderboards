@@ -3,7 +3,7 @@ package com.github.kevindagame.Command;
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Permission;
-import com.github.kevindagame.Command.events.Event;
+import com.github.kevindagame.events.Event;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;

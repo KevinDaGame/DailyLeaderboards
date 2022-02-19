@@ -1,16 +1,16 @@
 package com.github.kevindagame.database;
 
 import com.github.kevindagame.DailyLeaderBoards;
-import com.github.kevindagame.Command.events.LeaderBoard;
+import com.github.kevindagame.events.LeaderBoard;
 import com.github.kevindagame.Score;
-import com.github.kevindagame.Command.events.Event;
+import com.github.kevindagame.events.Event;
 
 import java.sql.*;
 import java.util.logging.Level;
 
 public abstract class Database {
     public String table;
-    DailyLeaderBoards plugin;
+    final DailyLeaderBoards plugin;
     Connection connection;
 
     public Database(DailyLeaderBoards instance) {
@@ -55,9 +55,6 @@ public abstract class Database {
             for (Score score : lb.getScores()) {
                 statement.addBatch("INSERT INTO score VALUES( " + currentEvent.getId() + ", \"" + score.getUuid() + "\", " + score.getScore() + ")" +
                         " ON CONFLICT(event_id, UUID) DO UPDATE SET score = " + score.getScore() + ";");
-                System.out.println("Saving for " + score.getUuid());
-                System.out.println("INSERT INTO score VALUES( " + currentEvent.getId() + ", \"" + score.getUuid() + "\", " + score.getScore() + ")" +
-                        " ON CONFLICT(UUID) DO UPDATE SET score = " + score.getScore() + ";");
             }
             statement.executeBatch();
             statement.close();
@@ -69,7 +66,6 @@ public abstract class Database {
 
     public Event createEvent(Event e) throws SQLException {
         Connection conn = getSQLConnection();
-        System.out.println("INSERT INTO event (name, start_time, end_time, is_running) VALUES(\"" + e.getName() + "\", \"" + e.getStartTime() + "\", \"" + e.getEndTime() + "\", 1);");
         Statement statement = conn.createStatement();
         statement.executeUpdate("INSERT INTO event (name, start_time, end_time, is_running) VALUES(\"" + e.getName() + "\", \"" + e.getStartTime() + "\", \"" + e.getEndTime() + "\", 1);");
         var rs = statement.getGeneratedKeys();

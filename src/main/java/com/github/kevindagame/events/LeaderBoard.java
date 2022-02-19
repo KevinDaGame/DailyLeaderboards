@@ -1,7 +1,7 @@
-package com.github.kevindagame.Command.events;
+package com.github.kevindagame.events;
 
 import com.github.kevindagame.Score;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,13 @@ public class LeaderBoard {
         this.scores = new ArrayList<>();
     }
 
-    public void addScore(Player player, int amount) {
+    public void addScore(OfflinePlayer player, int amount) {
         var score = getScore(player.getUniqueId().toString());
         if (score == null) {
             score = new Score(player.getUniqueId().toString(), player.getName());
             scores.add(score);
         }
         score.addScore(amount);
-        System.out.println("adding score! New score: " + score.getScore());
     }
 
     private Score getScore(String uuid) {
