@@ -21,6 +21,7 @@ public class StartEventCommand extends CommandModule{
         plugin.getPluginConfig().enableAutoRun();
         Event event = null;
         if (args.length == 1) {
+            args[0] = args[0].replace('-', ' ');
             event = eventsFileHandler.getEvent(args[0]);
             if (event == null) {
                 Message.INVALID_EVENT_ERROR.send(sender, args[0]);

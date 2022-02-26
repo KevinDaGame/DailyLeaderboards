@@ -1,4 +1,4 @@
-PREFIX: "[&cDailyleaderboards&f]"
+PREFIX: "[&#ff7faaDailyleaderboards&f]"
 TEST_MESSAGE: '&F Idk This probably says something {0}'
 TEST2_MESSAGE: '&e Idk This probably says something else {0}'
 STATUS_EVENT_MESSAGE: "The current event is {0}. It has {1} left"
@@ -17,7 +17,7 @@ SAVE_EVENT_MESSAGE: "The event {0} has been saved"
 
 
 LEADERBOARD_HEADER: "&c{0}"
-LEADERBOARD_RANK: "&c#{0} &8- {1}: {2}"
+LEADERBOARD_RANK: "&c#{0} &8- {1}: &f{2}"
 LEADERBOARD_HEADER_NO_EVENT: "&cThere's no event here"
 LEADERBOARD_RANK_NO_EVENT: ""
 LEADERBOARD_RANK_NO_PLAYER: "Noone yet"

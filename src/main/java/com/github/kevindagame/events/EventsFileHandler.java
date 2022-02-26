@@ -39,6 +39,9 @@ public class EventsFileHandler {
     public List<String> getAllEventNames() {
         List<String> list = new ArrayList<>();
         list.addAll(file.getKeys(false));
+        for (int i = 0; i < list.size(); i++ ) {
+            list.set(i, list.get(i).replace(' ', '-'));
+        }
         return list;
     }
 }

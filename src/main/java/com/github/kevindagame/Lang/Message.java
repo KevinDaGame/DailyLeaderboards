@@ -1,8 +1,9 @@
 package com.github.kevindagame.Lang;
 
+import com.github.kevindagame.ColorUtils;
 import com.github.kevindagame.DailyLeaderBoards;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -55,7 +56,8 @@ public enum Message {
                 plugin.getLogger().warning("Unable to load message " + message.name() + ". Please make sure it exists in the lang file.");
                 langMessage = "Error when loading message. Please contact an admin";
             }
-            message.setMessage(new RawMessage(message.name(), ChatColor.translateAlternateColorCodes('&', langMessage)));
+//            message.setMessage(new RawMessage(message.name(), ChatColor.translateAlternateColorCodes('&', langMessage)));
+            message.setMessage(new RawMessage(message.name(), ColorUtils.colorize(langMessage)));
         }
         DailyLeaderBoards.log("Finished loading messages");
     }
