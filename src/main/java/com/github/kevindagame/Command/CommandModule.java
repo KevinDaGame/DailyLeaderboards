@@ -48,5 +48,5 @@ public abstract class CommandModule
     //This method will process the command.
     public abstract boolean run(CommandSender sender, String[] args);
 
-    public abstract List<String> tabComplete();
+    public abstract List<String> tabComplete(String[] args);
 }

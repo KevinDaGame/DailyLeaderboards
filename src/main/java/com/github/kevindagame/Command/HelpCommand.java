@@ -19,7 +19,7 @@ public class HelpCommand extends CommandModule {
     }
 
     @Override
-    public List<String> tabComplete() {
+    public List<String> tabComplete(String[] args) {
         return null;
     }
 }

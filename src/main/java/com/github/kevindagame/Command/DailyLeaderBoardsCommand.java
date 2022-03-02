@@ -52,7 +52,7 @@ public class DailyLeaderBoardsCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
-        if (args.length == 0) return null;
+        if (args.length == 0) return commandModules.keySet().stream().toList();
         CommandModule commandModule = commandModules.get(args[0].toLowerCase());
         if (commandModule == null) {
             if (args.length == 1) {
@@ -60,6 +60,6 @@ public class DailyLeaderBoardsCommand implements CommandExecutor, TabCompleter {
             }
             return null;
         }
-        return commandModule.tabComplete();
+        return commandModule.tabComplete(args);
     }
 }

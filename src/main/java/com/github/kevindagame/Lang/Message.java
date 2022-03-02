@@ -36,6 +36,8 @@ public enum Message {
     LANG_RELOADED,
     LANG_RESET,
     LANG_RESET_ERROR,
+    INVALID_ARGUMENT_ERROR,
+
 
     ;
 

@@ -14,7 +14,7 @@ START_EVENT_BROADCAST: "The event {0} has started!"
 STOP_EVENT_BROADCAST: "The event {0} has ended!"
 START_EVENT_TIMER_BROADCAST: "The event {0} will start in {1}!"
 SAVE_EVENT_MESSAGE: "The event {0} has been saved"
-
+INVALID_ARGUMENT_ERROR: "This argument is invalid!"
 
 LEADERBOARD_HEADER: "&c{0}"
 LEADERBOARD_RANK: "&c#{0} &8- {1}: &f{2}"

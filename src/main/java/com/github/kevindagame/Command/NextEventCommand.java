@@ -47,7 +47,7 @@ public class NextEventCommand extends CommandModule {
     }
 
     @Override
-    public List<String> tabComplete() {
+    public List<String> tabComplete(String[] args) {
         return plugin.getEventsFileHandler().getAllEventNames();
     }
 }
