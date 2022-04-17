@@ -7,8 +7,8 @@ public enum Permission {
     START("dailyleaderboards.manage.start"),
     NEXT("dailyleaderboards.manage.next"),
     DEBUG("dailyleaderboards.debug"),
-    STATUS("dailyleaderboards.status")
-    ;
+    STATUS("dailyleaderboards.status"),
+    RELOAD("dailyleaderboards.reload");
 
     private final String permission;
     Permission(String permission) {
