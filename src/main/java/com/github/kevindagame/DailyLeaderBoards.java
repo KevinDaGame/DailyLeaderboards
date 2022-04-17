@@ -71,7 +71,6 @@ public class DailyLeaderBoards extends JavaPlugin {
             commands.clear();
         }
     }
-
     public PluginConfig getPluginConfig() {
         return config;
     }

@@ -16,6 +16,7 @@ public class CommandModuleFactory {
         commandModules.put("status", new StatusEventCommand(dailyLeaderBoards));
         commandModules.put("save", new SaveEventCommand(dailyLeaderBoards));
         commandModules.put("lang", new LangCommand(dailyLeaderBoards));
+        commandModules.put("reload", new ReloadCommand(dailyLeaderBoards));
         return commandModules;
     }
 }
