@@ -24,6 +24,7 @@ public class Event {
 
     public Event(String name) {
         this.name = name;
+        this.setLeaderBoard(new LeaderBoard(this));
     }
 
     public void startAutoSave(JavaPlugin plugin) {

@@ -23,14 +23,15 @@ public class EventsFileHandler {
         var keys = file.getKeys(false).toArray();
         if (keys.length == 0) return null;
         String key = (String) keys[random.nextInt(keys.length)];
-        return getEvent(key);
+        return getCurrentEvent(key);
     }
 
     public Event getEvent(String key) {
-        Event event = new Event(key);
-        LeaderBoard leaderBoard = new LeaderBoard(event);
-        event.setLeaderBoard(leaderBoard);
-        Listener listener = factory.getListener(leaderBoard, key, file);
+        return new Event(key);
+    }
+    public Event getCurrentEvent(String key){
+        Event event = getEvent(key);
+        Listener listener = factory.getListener(event.getLeaderBoard(), key, file);
         if (listener == null) return null;
         event.setListener(listener);
         return event;

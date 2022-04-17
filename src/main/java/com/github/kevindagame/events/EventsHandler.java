@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class EventsHandler {
@@ -16,22 +18,45 @@ public class EventsHandler {
     private final Database database;
     private final EventsFileHandler eventsFileHandler;
     private Event currentEvent;
+    private List<Event> pastEvents;
 
     public EventsHandler(DailyLeaderBoards plugin) {
         this.plugin = plugin;
         this.database = plugin.getDataBase();
         this.eventsFileHandler = plugin.getEventsFileHandler();
-        if(plugin.getPluginConfig().getAutoRun()){
-            load();
-        }
+        this.pastEvents = new ArrayList<>();
+        load();
 
     }
     //only called on first plugin load. This method checks if there is an existing event, and if there isnt it creates and starts a new one
     private void load() {
+        loadEvents();
+        if (loadRunningEvent()) return;
+        if(plugin.getPluginConfig().getAutoRun()){
+            createNewRandomEvent();
 
-        if (loadExistingEvent()) return;
-        createNewRandomEvent();
+        }
 
+    }
+
+    private void loadEvents() {
+        System.out.println("Loading previous events!");
+        var events = database.getEvents(plugin.getPluginConfig().getSavedLeaderboards());
+        try {
+            while (events.next()) {
+                Event event = eventsFileHandler.getCurrentEvent(events.getString("name"));
+                event.setStartTime(events.getTimestamp("start_time"));
+                event.setEndTime(events.getTimestamp("end_time"));
+                event.setId(events.getInt("rowid"));
+                var leaderboard = database.getLeaderBoard(event.getId());
+                while(leaderboard.next()){
+                    event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
+                }
+                pastEvents.add(event);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private void createNewRandomEvent() {
@@ -81,11 +106,11 @@ public class EventsHandler {
         }, timeToGo / 50));
     }
 
-    private boolean loadExistingEvent() {
+    private boolean loadRunningEvent() {
         var runningEvent = database.getRunningEvent();
         try {
             if (runningEvent.next()) {
-                Event event = eventsFileHandler.getEvent(runningEvent.getString("name"));
+                Event event = eventsFileHandler.getCurrentEvent(runningEvent.getString("name"));
                 event.setDatabase(database);
                 event.setStartTime(runningEvent.getTimestamp("start_time"));
                 event.setEndTime(runningEvent.getTimestamp("end_time"));
@@ -115,20 +140,38 @@ public class EventsHandler {
     private void endEvent(Event event) {
         Message.STOP_EVENT_BROADCAST.broadcast(event.getName());
         event.stop();
+        addEventToPastEvents(event);
         database.endEvent(event);
         currentEvent = null;
         //TODO handle rewards here
     }
-
+    private void addEventToPastEvents(Event event){
+        pastEvents.add(0, event);
+        if(pastEvents.size() > plugin.getPluginConfig().getSavedLeaderboards()){
+            pastEvents.remove(pastEvents.size() - 1);
+        }
+    }
     public Event getCurrentEvent() {
         return currentEvent;
     }
 
     public void save() {
-        currentEvent.save();
+        if(currentEvent != null){
+            currentEvent.save();
+        }
     }
 
     public boolean isRunning() {
         return currentEvent != null;
+    }
+
+    public Event getEvent(int id) {
+        if(id == 0){
+            return currentEvent;
+        }
+        else if(id < pastEvents.size() + 1){
+            return pastEvents.get(id - 1);
+        }
+        return null;
     }
 }

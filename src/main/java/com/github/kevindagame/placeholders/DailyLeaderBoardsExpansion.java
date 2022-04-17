@@ -34,24 +34,21 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
     @Override
     public String onRequest(OfflinePlayer p, String params) {
         String[] newParams = params.split("_");
-
+        //param 0 = header or rank
+        //param 1 = leaderboard number (0 is the current event), 1 is the latest ended, 2 is the 2nd latest etc
+        //param 2 = the rank (0 based)
         if (newParams[0].equals("header") && newParams.length == 2) {
             if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
-            if (Integer.parseInt(newParams[1]) == 0) {
-                if(plugin.getEventsHandler().getCurrentEvent() == null) return Message.LEADERBOARD_HEADER_NO_EVENT.getMessage();
-                return Message.LEADERBOARD_HEADER.getMessage(plugin.getEventsHandler().getCurrentEvent().getName());
-            }
+            var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
+            if(event == null) return Message.LEADERBOARD_HEADER_NO_EVENT.getMessage();
+            return Message.LEADERBOARD_HEADER.getMessage(event.getName());
         }
 
         if (newParams[0].equals("rank") && newParams.length == 3) {
             if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
-            Event event = null;
-            if (Integer.parseInt(newParams[1]) == 0) {
-                event = plugin.getEventsHandler().getCurrentEvent();
-            }
-            if (event == null) {
-                return Message.LEADERBOARD_RANK_NO_EVENT.getMessage();
-            }
+            if (isinvalidInt(newParams[2])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+            var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
+            if(event == null) return Message.LEADERBOARD_HEADER_NO_EVENT.getMessage();
             var leaderboard = event.getLeaderBoard().getScores().stream().sorted(Comparator.comparingInt(Score::getScore).reversed()).toList();
             if(leaderboard.size() < Integer.parseInt(newParams[2]) + 1){
                 return Message.LEADERBOARD_RANK_NO_PLAYER.getMessage();

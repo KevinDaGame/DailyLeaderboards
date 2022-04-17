@@ -2,4 +2,6 @@ table-name: daily_leaderboard
 database-name: daily_leaderboards
 #event duration. Formatted like: HH:MM:SS
 event-duration: "24:00:00"
-auto-run: false
+auto-run: true
+#how many leaderboards should be saved for viewing previous leaderboards? (this is added to the current event)
+saved-leaderboards: 2

@@ -24,7 +24,7 @@ public class NextEventCommand extends CommandModule {
         var eventsFileHandler = plugin.getEventsFileHandler();
         Event event = null;
         if (args.length == 1) {
-            event = eventsFileHandler.getEvent(args[0]);
+            event = eventsFileHandler.getCurrentEvent(args[0]);
             if (event == null) {
                 Message.INVALID_EVENT_ERROR.send(sender, args[0]);
                 return true;

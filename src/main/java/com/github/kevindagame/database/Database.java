@@ -95,6 +95,23 @@ public abstract class Database {
         return null;
     }
 
+    public ResultSet getEvents(int amount) {
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            System.out.println("SELECT rowid, * FROM event WHERE (is_running = 0) LIMIT " + amount + " ORDER BY 'end_time' DESCENDING");
+
+            return statement.executeQuery("SELECT rowid, * FROM event WHERE (is_running = 0) ORDER BY 'end_time' DESC LIMIT " + amount);
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public ResultSet getLeaderBoard(int eventId) {
         Connection conn;
         Statement statement;

@@ -32,6 +32,10 @@ public class PluginConfig {
     public String getEventDuration() {
         return reader.getString("event-duration");
     }
+    public int getSavedLeaderboards() {
+        return reader.getInt("saved-leaderboards");
+
+    }
 
     public void disableAutoRun() {
         reader.set("auto-run", false);
