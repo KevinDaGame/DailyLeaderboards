@@ -4,11 +4,14 @@
 #   bucket-placed
 #   bucket-pickup
 #   entity-kill
+#   mythic-mob-kill
 
 #Can't contain a horizontal line (-)!!!!!!
 #valid extra parameters:
 # event-material: e.g SMOOTH_STONE
 # event-entity: e.g ZOMBIE
+# event-mob: A mythic mob name
+
 
 #'Stone-blocks-mined':
 #  event-type: blocks-broken
@@ -28,3 +31,7 @@
 creeper kills:
   event-type: entity-kill
   event-entity: CREEPER
+
+skeletonking kills:
+  event-type: mythic-mob-kill
+  event-mob: SkeletonKing

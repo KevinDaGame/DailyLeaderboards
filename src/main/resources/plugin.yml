@@ -5,6 +5,8 @@ api-version: 1.16
 author: KevinDaGame
 description: new leaderboard every day!
 depend: [PlaceholderAPI]
+softdepend:
+  - MythicMobs
 permissions:
   dailyleaderboards.*:
     description: All permissions

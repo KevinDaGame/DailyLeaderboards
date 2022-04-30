@@ -20,11 +20,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class DailyLeaderBoards extends JavaPlugin {
+    public static DailyLeaderBoards plugin;
     private EventsFileHandler eventsFileHandler;
     private PluginConfig config;
     private Database db;
     private EventsHandler eventsHandler;
-    public static DailyLeaderBoards plugin;
 
     public static HashMap<String, CommandModule> commands;
 
@@ -33,44 +33,68 @@ public class DailyLeaderBoards extends JavaPlugin {
         plugin = this;
         Message.load();
         plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules(this)));
-        if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new DailyLeaderBoardsExpansion(this).register();
             DailyLeaderBoards.log("Succesfully loaded placeholders");
         }
-        File configFile = new File(getDataFolder(), "config.yml");
-        if (!configFile.exists()) saveResource(configFile.getName(), false);
-        config = new PluginConfig(configFile);
+        loadConfig();
+        loadDatabase();
+        loadEvents();
+    }
 
+    @Override
+    public void onDisable() {
+        unloadEventsHandler();
+        unloadCommands();
+        unloadDatabase();
+        plugin = null;
+    }
+
+    private void unloadCommands() {
+        if (commands != null) {
+            commands.clear();
+        }
+    }
+
+    private void unloadEventsHandler() {
+        if (eventsHandler != null) {
+            eventsHandler.save();
+        }
+    }
+
+    private void unloadDatabase() {
+        try {
+            if (getDataBase() != null) {
+                getDataBase().getSQLConnection().close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadEvents() {
         File eventsFile = new File(getDataFolder(), "events.yml");
         if (!eventsFile.exists()) saveResource(eventsFile.getName(), false);
         FileConfiguration events = YamlConfiguration.loadConfiguration(eventsFile);
         eventsFileHandler = new EventsFileHandler(events);
+        eventsHandler = new EventsHandler(this);
+    }
+
+    private void loadDatabase() {
         this.db = new SQLite(this);
         this.db.load();
-        eventsHandler = new EventsHandler(this);
+    }
+
+    private void loadConfig() {
+        File configFile = new File(getDataFolder(), "config.yml");
+        if (!configFile.exists()) saveResource(configFile.getName(), false);
+        config = new PluginConfig(configFile);
     }
 
     public static void log(String message) {
         plugin.getLogger().info(message);
     }
 
-    @Override
-    public void onDisable() {
-        try {
-            if(getDataBase() != null){
-                getDataBase().getSQLConnection().close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (eventsHandler != null) {
-            eventsHandler.save();
-        }
-        plugin = null;
-        if (commands != null) {
-            commands.clear();
-        }
-    }
     public PluginConfig getPluginConfig() {
         return config;
     }
