@@ -37,7 +37,7 @@ public enum Message {
     LANG_RESET,
     LANG_RESET_ERROR,
 
-    ;
+    SCORE_NULL, SCORE_NO_EVENT;
 
 
     private static final DailyLeaderBoards plugin = DailyLeaderBoards.getPlugin(DailyLeaderBoards.class);

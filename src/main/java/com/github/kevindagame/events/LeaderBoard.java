@@ -24,7 +24,7 @@ public class LeaderBoard {
         score.addScore(amount);
     }
 
-    private Score getScore(String uuid) {
+    public Score getScore(String uuid) {
         var score = scores.stream().filter(s -> s.getUuid().equals(uuid)).findFirst();
         if (score.isEmpty()) return null;
         return score.get();

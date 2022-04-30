@@ -6,28 +6,28 @@
 #   entity-kill
 #   mythic-mob-kill
 
-#Can't contain a horizontal line (-)!!!!!!
 #valid extra parameters:
 # event-material: e.g SMOOTH_STONE
 # event-entity: e.g ZOMBIE
 # event-mob: A mythic mob name
 
+# you can not use a dash in event names!
 
-#'Stone-blocks-mined':
-#  event-type: blocks-broken
-#  event-material: STONE
-#'Grass-blocks-placed':
-#  event-type: blocks-placed
-#  event-material: GRASS_BLOCK
-#'test-wheat':
-#  event-type: blocks-broken
-#  event-material: WHEAT
-#'lava-placed':
-#  event-type: bucket-placed
-#  event-material: LAVA_BUCKET
-#'water-pickup':
-#  event-type: bucket-pickup
-#  event-material: WATER
+Stone blocks mined:
+  event-type: blocks-broken
+  event-material: STONE
+Grass blocks placed:
+  event-type: blocks-placed
+  event-material: GRASS_BLOCK
+wheat farmed:
+  event-type: blocks-broken
+  event-material: WHEAT
+lava placed:
+  event-type: bucket-placed
+  event-material: LAVA_BUCKET
+water pickup:
+  event-type: bucket-pickup
+  event-material: WATER
 creeper kills:
   event-type: entity-kill
   event-entity: CREEPER
