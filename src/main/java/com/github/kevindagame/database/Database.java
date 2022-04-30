@@ -101,7 +101,6 @@ public abstract class Database {
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            System.out.println("SELECT rowid, * FROM event WHERE (is_running = 0) LIMIT " + amount + " ORDER BY 'end_time' DESCENDING");
 
             return statement.executeQuery("SELECT rowid, * FROM event WHERE (is_running = 0) ORDER BY 'end_time' DESC LIMIT " + amount);
 
@@ -133,7 +132,19 @@ public abstract class Database {
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            statement.executeUpdate("UPDATE event SET is_running = 0 WHERE rowid = " + event.getId() + ";");
+            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + event.getId() + ";");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void forceEndEvent(int id) {
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + id + ";");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

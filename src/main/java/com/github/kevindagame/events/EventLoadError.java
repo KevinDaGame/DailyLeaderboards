@@ -1,4 +1,4 @@
-package com.github.kevindagame;
+package com.github.kevindagame.events;
 
 import org.bukkit.Bukkit;
 

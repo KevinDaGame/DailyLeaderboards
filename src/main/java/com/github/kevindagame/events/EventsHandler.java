@@ -6,6 +6,7 @@ import com.github.kevindagame.TimeFormatter;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -40,18 +41,12 @@ public class EventsHandler {
     }
 
     private void loadEvents() {
-        System.out.println("Loading previous events!");
+        DailyLeaderBoards.log("Loading previous events!");
         var events = database.getEvents(plugin.getPluginConfig().getSavedLeaderboards());
         try {
             while (events.next()) {
-                Event event = eventsFileHandler.getCurrentEvent(events.getString("name"));
-                event.setStartTime(events.getTimestamp("start_time"));
-                event.setEndTime(events.getTimestamp("end_time"));
-                event.setId(events.getInt("rowid"));
-                var leaderboard = database.getLeaderBoard(event.getId());
-                while(leaderboard.next()){
-                    event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
-                }
+                Event event = eventsFileHandler.getEvent(events.getString("name"));
+                PopulateEvent(events, event);
                 pastEvents.add(event);
             }
         } catch (SQLException throwables) {
@@ -111,14 +106,13 @@ public class EventsHandler {
         try {
             if (runningEvent.next()) {
                 Event event = eventsFileHandler.getCurrentEvent(runningEvent.getString("name"));
-                event.setDatabase(database);
-                event.setStartTime(runningEvent.getTimestamp("start_time"));
-                event.setEndTime(runningEvent.getTimestamp("end_time"));
-                event.setId(runningEvent.getInt("rowid"));
-                var leaderboard = database.getLeaderBoard(event.getId());
-                while(leaderboard.next()){
-                    event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
+                if(event == null){
+                    database.forceEndEvent(runningEvent.getInt("rowid"));
+                    DailyLeaderBoards.log("Stopping event " + runningEvent.getString("name"));
+                    return false;
                 }
+                event.setDatabase(database);
+                PopulateEvent(runningEvent, event);
                 if (event.shouldBeRunning()) {
                     startEvent(event);
                     return true;
@@ -130,6 +124,17 @@ public class EventsHandler {
             throwables.printStackTrace();
         }
         return false;
+    }
+
+    private Event PopulateEvent(ResultSet eventData, Event event) throws SQLException {
+        event.setStartTime(eventData.getTimestamp("start_time"));
+        event.setEndTime(eventData.getTimestamp("end_time"));
+        event.setId(eventData.getInt("rowid"));
+        var leaderboard = database.getLeaderBoard(event.getId());
+        while(leaderboard.next()){
+            event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
+        }
+        return event;
     }
 
     public void endCurrentEvent(){

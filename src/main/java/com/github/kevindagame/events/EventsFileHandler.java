@@ -1,6 +1,5 @@
 package com.github.kevindagame.events;
 
-import com.github.kevindagame.EventListenerFactory;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 
@@ -29,18 +28,23 @@ public class EventsFileHandler {
     public Event getEvent(String key) {
         return new Event(key);
     }
-    public Event getCurrentEvent(String key){
+
+    public Event getCurrentEvent(String key) {
         Event event = getEvent(key);
-        Listener listener = factory.getListener(event.getLeaderBoard(), key, file);
-        if (listener == null) return null;
-        event.setListener(listener);
-        return event;
+        try {
+            Listener listener = factory.getListener(event.getLeaderBoard(), key, file);
+            if (listener == null) return null;
+            event.setListener(listener);
+            return event;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<String> getAllEventNames() {
-        List<String> list = new ArrayList<>();
-        list.addAll(file.getKeys(false));
-        for (int i = 0; i < list.size(); i++ ) {
+        List<String> list = new ArrayList<>(file.getKeys(false));
+        for (int i = 0; i < list.size(); i++) {
             list.set(i, list.get(i).replace(' ', '-'));
         }
         return list;
