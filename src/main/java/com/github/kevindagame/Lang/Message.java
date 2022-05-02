@@ -36,6 +36,8 @@ public enum Message {
     LANG_RELOADED,
     LANG_RESET,
     LANG_RESET_ERROR,
+    HELP_HEADER,
+    HELP_ROW,
 
     SCORE_NULL, SCORE_NO_EVENT;
 
@@ -68,6 +70,9 @@ public enum Message {
 
     public void send(CommandSender sender, Object... objects) {
         sender.sendMessage(PREFIX.getMessage() + " " + Message.replaceArgs(message.getMessage(), objects));
+    }
+    public void sendNoPrefix(CommandSender sender, Object... objects) {
+        sender.sendMessage(Message.replaceArgs(message.getMessage(), objects));
     }
 
     public String getMessage(Object... objects) {

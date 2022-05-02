@@ -25,14 +25,14 @@ public class DailyLeaderBoards extends JavaPlugin {
     private PluginConfig config;
     private Database db;
     private EventsHandler eventsHandler;
-
-    public static HashMap<String, CommandModule> commands;
+    private DailyLeaderBoardsCommand commandHandler;
 
     @Override
     public void onEnable() {
         plugin = this;
         Message.load();
-        plugin.getCommand("dailyleaderboards").setExecutor(new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules(this)));
+        commandHandler = new DailyLeaderBoardsCommand(CommandModuleFactory.getCommandModules(this));
+        plugin.getCommand("dailyleaderboards").setExecutor(commandHandler);
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new DailyLeaderBoardsExpansion(this).register();
             DailyLeaderBoards.log("Succesfully loaded placeholders");
@@ -45,15 +45,12 @@ public class DailyLeaderBoards extends JavaPlugin {
     @Override
     public void onDisable() {
         unloadEventsHandler();
-        unloadCommands();
         unloadDatabase();
         plugin = null;
     }
 
-    private void unloadCommands() {
-        if (commands != null) {
-            commands.clear();
-        }
+    public DailyLeaderBoardsCommand getCommandHandler() {
+        return commandHandler;
     }
 
     private void unloadEventsHandler() {
