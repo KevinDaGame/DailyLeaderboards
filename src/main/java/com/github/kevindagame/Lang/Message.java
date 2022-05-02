@@ -38,6 +38,8 @@ public enum Message {
     LANG_RESET_ERROR,
     HELP_HEADER,
     HELP_ROW,
+    INVALID_ARGUMENT_ERROR,
+
 
     SCORE_NULL, SCORE_NO_EVENT;
 
