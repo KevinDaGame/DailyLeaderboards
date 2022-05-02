@@ -10,7 +10,7 @@ import java.util.List;
 public class TestCommand extends CommandModule{
 
     public TestCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "test", 0, 0, Permission.DEBUG);
+        super(dailyLeaderBoards, "test", "Test", "test", 0, 0, Permission.DEBUG);
     }
 
     @Override

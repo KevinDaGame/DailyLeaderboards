@@ -10,7 +10,7 @@ import java.util.List;
 public class StopEventCommand extends CommandModule {
 
     public StopEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "stop", 0, 0, Permission.STOP);
+        super(dailyLeaderBoards, "stop", "Stop the current event", "", 0, 0, Permission.STOP);
     }
 
     @Override

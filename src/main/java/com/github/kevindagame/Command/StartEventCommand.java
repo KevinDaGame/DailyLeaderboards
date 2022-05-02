@@ -11,7 +11,7 @@ import java.util.List;
 public class StartEventCommand extends CommandModule{
 
     public StartEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "start", 0, 1, Permission.START);
+        super(dailyLeaderBoards, "start", "Start an event when no event is running", "[event-name]", 0, 1, Permission.START);
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
 public class ReloadCommand extends CommandModule{
 
     public ReloadCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "reload", 0, 0, Permission.RELOAD);
+        super(dailyLeaderBoards, "reload", "Reload the plugin", "", 0, 0, Permission.RELOAD);
     }
 
     @Override
