@@ -28,4 +28,4 @@ LANG_RESET_ERROR: "please add confirm to the command to confirm you want to &cRE
 SCORE_NULL: "&cNo score"
 SCORE_NO_EVENT: "&cNo event"
 HELP_HEADER: "The following commands are available:"
-HELP_ROW: "&#ff7faa{0} -&r {1} &#ff7faa-&r Usage: /dlb {0}"
+HELP_ROW: "&#ff7faa{0} -&r {1} &#ff7faa-&r Usage: {2}"
