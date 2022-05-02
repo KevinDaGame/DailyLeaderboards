@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LangCommand extends CommandModule {
     public LangCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "lang", "Reload or reset the language file", "<reload|reset>", 1, 2, Permission.MANAGE);
+        super(dailyLeaderBoards, "lang", "Reload or reset the language file", "<reload|reset|test>", 1, 2, Permission.MANAGE);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class LangCommand extends CommandModule {
                 case "test":
                     return Arrays.stream(Message.values()).map(Message::toString).toList();
                 case "reset":
-                    return Arrays.asList("confirm");
+                    return List.of("confirm");
             }
         }
         if(args.length == 2){
