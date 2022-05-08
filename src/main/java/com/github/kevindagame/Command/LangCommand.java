@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LangCommand extends CommandModule {
     public LangCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "lang", "Reload or reset the language file", "<reload|reset|test>", 1, 2, Permission.MANAGE);
+        super(dailyLeaderBoards, Message.COMMAND_LANG_LABEL, Message.COMMAND_LANG_DESCRIPTION, Message.COMMAND_LANG_USAGE, 1, 2, Permission.MANAGE);
     }
 
     @Override

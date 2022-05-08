@@ -99,7 +99,6 @@ public class Event {
             return;
         }
         database.saveEvent(this);
-        DailyLeaderBoards.log("Saving leaderboard...");
     }
 
     public void setEndTask(int scheduleSyncDelayedTask) {
