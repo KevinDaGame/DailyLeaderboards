@@ -40,6 +40,9 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         if (newParams[0].equals("header") && newParams.length == 2) {
             return headerRequest(newParams);
         }
+        if (newParams[0].equals("description") && newParams.length == 2) {
+            return descriptionRequest(newParams);
+        }
         if (newParams[0].equals("score")) {
             return score(p);
         }
@@ -48,6 +51,7 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         }
         return Message.LEADERBOARD_INVALID_VALUE.getMessage();
     }
+
 
     private String score(OfflinePlayer p) {
         var event = plugin.getEventsHandler().getCurrentEvent();
@@ -68,6 +72,13 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         }
         var score = leaderboard.get(Integer.parseInt(newParams[2]));
         return Message.LEADERBOARD_RANK.getMessage(Integer.parseInt(newParams[2]) + 1, score.getName(), score.getScore());
+    }
+
+    private String descriptionRequest(String[] newParams) {
+        if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+        var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
+        if(event == null) return Message.LEADERBOARD_DESCRIPTION_NO_EVENT.getMessage();
+        return Message.LEADERBOARD_DESCRIPTION.getMessage(event.getDescription());
     }
 
     private String headerRequest(String[] newParams) {

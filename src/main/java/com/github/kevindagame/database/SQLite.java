@@ -20,7 +20,7 @@ public class SQLite extends Database {
         table = plugin.getPluginConfig().getTableName();
         SQLiteCreateTable = """
                 CREATE TABLE IF NOT EXISTS event (
-                  'name' VARCHAR NOT NULL,
+                  'type_slug' INT NOT NULL,
                   `start_time` DATETIME NOT NULL,
                   `end_time` DATETIME NOT NULL,
                   'is_running' INT NOT NULL

@@ -6,6 +6,7 @@ import com.github.kevindagame.TimeFormatter;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
 
+import javax.naming.ConfigurationException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -45,11 +46,11 @@ public class EventsHandler {
         var events = database.getEvents(plugin.getPluginConfig().getSavedLeaderboards());
         try {
             while (events.next()) {
-                Event event = eventsFileHandler.getEvent(events.getString("name"));
+                Event event = eventsFileHandler.getEvent(events.getString("type_slug"));
                 PopulateEvent(events, event);
                 pastEvents.add(event);
             }
-        } catch (SQLException throwables) {
+        } catch (SQLException | ConfigurationException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -105,10 +106,10 @@ public class EventsHandler {
         var runningEvent = database.getRunningEvent();
         try {
             if (runningEvent.next()) {
-                Event event = eventsFileHandler.getCurrentEvent(runningEvent.getString("name"));
+                Event event = eventsFileHandler.getCurrentEvent(runningEvent.getString("type_slug"));
                 if(event == null){
                     database.forceEndEvent(runningEvent.getInt("rowid"));
-                    DailyLeaderBoards.log("Stopping event " + runningEvent.getString("name"));
+                    DailyLeaderBoards.log("Stopping event " + runningEvent.getString("type_slug") + " because it is not in the events file!");
                     return false;
                 }
                 event.setDatabase(database);

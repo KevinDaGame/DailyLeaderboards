@@ -66,7 +66,7 @@ public enum Message {
 
 
 
-    SCORE_NULL, SCORE_NO_EVENT;
+    SCORE_NULL, SCORE_NO_EVENT, LEADERBOARD_DESCRIPTION, LEADERBOARD_DESCRIPTION_NO_EVENT;
 
 
     private static final DailyLeaderBoards plugin = DailyLeaderBoards.getPlugin(DailyLeaderBoards.class);
@@ -116,7 +116,7 @@ public enum Message {
 
         for (int i = 0; i < objects.length; i++) {
             String objectString = objects[i].toString();
-            msg = msg.replace("{" + i + "}", objectString);
+            msg = ColorUtils.colorize(msg.replace("{" + i + "}", objectString));
         }
 
         return msg;

@@ -6,32 +6,50 @@
 #   entity-kill
 #   mythic-mob-kill
 
+#valid parameters:
+# event-name
+# event-type
+# event-description
+
 #valid extra parameters:
 # event-material: e.g SMOOTH_STONE
 # event-entity: e.g ZOMBIE
 # event-mob: A mythic mob name
 
-# you can not use a dash in event names!
+# you can not use a dash in event headers!
 
-Stone blocks mined:
+stone-broken:
+  event-name: "&2Stone blocks mined"
+  event-description: Mine stone blocks to get points
   event-type: blocks-broken
   event-material: STONE
-Grass blocks placed:
+grass-placed:
+  event-name: "&5Grass blocks placed"
+  event-description: Place grass blocks to get points
   event-type: blocks-placed
   event-material: GRASS_BLOCK
-wheat farmed:
+wheat-farmed:
+  event-name: "&4Wheat farmed"
+  event-description: Farm wheat to get points
   event-type: blocks-broken
   event-material: WHEAT
-lava placed:
+lava-bucket-placed:
+  event-name: "&7Lava placed"
+  event-description: Place lava to get points
   event-type: bucket-placed
   event-material: LAVA_BUCKET
-water pickup:
+water-bucket-picked-up:
+  event-name: "&8Water picked up"
+  event-description: Pick up water to get points
   event-type: bucket-pickup
   event-material: WATER
-creeper kills:
+creepers-killed:
+  event-name: "&9Creepers killed"
+  event-description: Kill creepers to get points
   event-type: entity-kill
   event-entity: CREEPER
-
-skeletonking kills:
+skeleton-king-killed:
+  event-name: "&1Skeleton kings killed"
+  event-description: You can find skeleton kings in the nether
   event-type: mythic-mob-kill
   event-mob: SkeletonKing
