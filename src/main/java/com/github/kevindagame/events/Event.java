@@ -12,18 +12,22 @@ import java.sql.Timestamp;
 
 
 public class Event {
+    private final String description;
     private Listener listener;
     private LeaderBoard leaderBoard;
     private Timestamp startTime;
     private Timestamp endTime;
     private int id;
+    private String eventTypeSlug;
     private final String name;
     private Database database;
     private int saveTask;
     private int endTask;
 
-    public Event(String name) {
+    public Event(String slug, String name, String description) {
         this.name = name;
+        this.eventTypeSlug = slug;
+        this.description = description;
         this.setLeaderBoard(new LeaderBoard(this));
     }
 
@@ -31,6 +35,14 @@ public class Event {
         saveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             save();
         }, 1200, 1200);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEventTypeSlug() {
+        return eventTypeSlug;
     }
 
     public void stopSaving() {
@@ -95,7 +107,6 @@ public class Event {
 
     public void save() {
         if (database == null){
-//            throw new NullPointerException("The database has failed to load, and this event can therefore not be saved!");
             return;
         }
         database.saveEvent(this);

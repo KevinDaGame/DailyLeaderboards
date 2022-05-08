@@ -24,7 +24,7 @@ public abstract class Database {
     public void initialize() {
         connection = getSQLConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM event WHERE name = \"\"");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM event WHERE type_slug = \"\"");
             ResultSet rs = ps.executeQuery();
             close(ps, rs);
 
@@ -67,7 +67,7 @@ public abstract class Database {
     public Event createEvent(Event e) throws SQLException {
         Connection conn = getSQLConnection();
         Statement statement = conn.createStatement();
-        statement.executeUpdate("INSERT INTO event (name, start_time, end_time, is_running) VALUES(\"" + e.getName() + "\", \"" + e.getStartTime() + "\", \"" + e.getEndTime() + "\", 1);");
+        statement.executeUpdate("INSERT INTO event (type_slug, start_time, end_time, is_running) VALUES(\"" + e.getEventTypeSlug() + "\", \"" + e.getStartTime() + "\", \"" + e.getEndTime() + "\", 1);");
         var rs = statement.getGeneratedKeys();
         if (rs.next()) {
             e.setId(rs.getInt(1));
