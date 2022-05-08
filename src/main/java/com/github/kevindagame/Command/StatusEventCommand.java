@@ -10,7 +10,7 @@ import java.util.List;
 
 public class StatusEventCommand extends CommandModule{
     public StatusEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "status", "Get the status of the event", "", 0, 0, Permission.STATUS);
+        super(dailyLeaderBoards, Message.COMMAND_STATUS_LABEL, Message.COMMAND_STATUS_DESCRIPTION, Message.COMMAND_STATUS_USAGE, 0, 0, Permission.STATUS);
     }
 
     @Override

@@ -1,21 +1,22 @@
 package com.github.kevindagame.Command;
 
 import com.github.kevindagame.DailyLeaderBoards;
+import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Permission;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
 public abstract class CommandModule {
-    private final String label;
+    private final Message label;
     private final int minArgs;
     private final int maxArgs;
     private final Permission permission;
     protected final DailyLeaderBoards plugin;
-    private final String usage;
-    private final String description;
+    private final Message usage;
+    private final Message description;
 
-    public CommandModule(DailyLeaderBoards dailyLeaderBoards, String label, String description, String usage, int minArgs, int maxArgs, Permission permission) {
+    public CommandModule(DailyLeaderBoards dailyLeaderBoards, Message label, Message description, Message usage, int minArgs, int maxArgs, Permission permission) {
         this.plugin = dailyLeaderBoards;
         this.label = label;
         this.description = description;
@@ -31,7 +32,7 @@ public abstract class CommandModule {
     }
 
     public String getLabel() {
-        return label;
+        return label.getMessage();
     }
 
     public int getMinArgs() {
@@ -43,11 +44,11 @@ public abstract class CommandModule {
     }
 
     public String getDescription() {
-        return description;
+        return description.getMessage();
     }
 
     public String getUsage() {
-        return "/dlb " + label + " " + usage;
+        return "/dlb " + getLabel() + " " + usage;
     }
 
     //This method will process the command.

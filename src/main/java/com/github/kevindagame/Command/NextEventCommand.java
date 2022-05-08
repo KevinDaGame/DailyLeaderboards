@@ -12,7 +12,7 @@ import java.util.List;
 public class NextEventCommand extends CommandModule {
 
     public NextEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "next", "End the current event and start the next", "[event-name]", 0, 1, Permission.NEXT);
+        super(dailyLeaderBoards, Message.COMMAND_NEXT_LABEL, Message.COMMAND_NEXT_DESCRIPTION, Message.COMMAND_NEXT_USAGE, 0, 1, Permission.NEXT);
     }
 
     @Override

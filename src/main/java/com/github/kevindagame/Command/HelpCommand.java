@@ -10,7 +10,7 @@ import java.util.List;
 public class HelpCommand extends CommandModule {
 
     public HelpCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "help", "The help command", "", 0, 0, Permission.HELP);
+        super(dailyLeaderBoards, Message.COMMAND_HELP_LABEL, Message.COMMAND_HELP_DESCRIPTION, Message.COMMAND_HELP_USAGE, 0, 0, Permission.HELP);
     }
 
     @Override
