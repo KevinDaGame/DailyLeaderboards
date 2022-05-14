@@ -48,7 +48,7 @@ public abstract class CommandModule {
     }
 
     public String getUsage() {
-        return "/dlb " + getLabel() + " " + usage;
+        return "/dlb " + getLabel() + " " + usage.getMessage();
     }
 
     //This method will process the command.

@@ -65,10 +65,10 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
         if (isinvalidInt(newParams[2])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
         var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
-        if(event == null) return Message.LEADERBOARD_HEADER_NO_EVENT.getMessage();
+        if(event == null) return Message.LEADERBOARD_RANK_NO_EVENT.getMessage(Integer.parseInt(newParams[2]) + 1);
         var leaderboard = event.getLeaderBoard().getScores().stream().sorted(Comparator.comparingInt(Score::getScore).reversed()).toList();
         if(leaderboard.size() < Integer.parseInt(newParams[2]) + 1){
-            return Message.LEADERBOARD_RANK_NO_PLAYER.getMessage();
+            return Message.LEADERBOARD_RANK_NO_PLAYER.getMessage(Integer.parseInt(newParams[2]) + 1);
         }
         var score = leaderboard.get(Integer.parseInt(newParams[2]));
         return Message.LEADERBOARD_RANK.getMessage(Integer.parseInt(newParams[2]) + 1, score.getName(), score.getScore());
