@@ -17,6 +17,7 @@ public class CommandModuleFactory {
         commandModules.put(Message.COMMAND_SAVE_LABEL.getMessage(), new SaveEventCommand(dailyLeaderBoards));
         commandModules.put(Message.COMMAND_LANG_LABEL.getMessage(), new LangCommand(dailyLeaderBoards));
         commandModules.put(Message.COMMAND_RELOAD_LABEL.getMessage(), new ReloadCommand(dailyLeaderBoards));
+        commandModules.put(Message.COMMAND_REWARDS_LABEL.getMessage(), new RewardsCommand(dailyLeaderBoards));
         return commandModules;
     }
 }
