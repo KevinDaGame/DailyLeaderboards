@@ -152,14 +152,14 @@ public abstract class Database {
         }
     }
 
-    public void addReward(String command, int eventId, String uuid) {
+    public void addReward(String command, String uuid) {
         //add reward to database
         Connection conn;
         Statement statement;
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            statement.executeUpdate("INSERT INTO rewards (event_id, UUID, command) VALUES(" + eventId + ", \"" + uuid + "\", \"" + command + "\");");
+            statement.executeUpdate("INSERT INTO rewards (UUID, command) VALUES(" + "\"" + uuid + "\", \"" + command + "\");");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -4,8 +4,11 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import javax.naming.ConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PluginConfig {
     private final FileConfiguration reader;
@@ -35,6 +38,15 @@ public class PluginConfig {
     public int getSavedLeaderboards() {
         return reader.getInt("saved-leaderboards");
 
+    }
+    public Map<Integer, String> getRewards() {
+        Map<Integer, String> rewards = new HashMap<>();
+        var value = reader.getConfigurationSection("rewards");
+        if(value == null) return null;
+        for(var key : value.getKeys(false)) {
+            rewards.put(Integer.parseInt(key), value.getString(key + ".command"));
+        }
+        return rewards;
     }
 
     public void disableAutoRun() {

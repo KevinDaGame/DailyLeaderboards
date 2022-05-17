@@ -5,14 +5,14 @@ import org.bukkit.Bukkit;
 
 public class RewardsHandler {
     //add reward
-    public void addReward(String uuid, int eventId, String reward) {
+    public static void addReward(String uuid, String reward) {
         //if player is online then give rewards
         if (DailyLeaderBoards.plugin.getServer().getPlayer(uuid) != null) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), reward);
             return;
         }
         //add reward to database
-        DailyLeaderBoards.plugin.getDataBase().addReward(uuid, eventId, reward);
+        DailyLeaderBoards.plugin.getDataBase().addReward(uuid, reward);
 
     }
 

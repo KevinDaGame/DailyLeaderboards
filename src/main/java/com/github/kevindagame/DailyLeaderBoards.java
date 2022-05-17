@@ -9,6 +9,7 @@ import com.github.kevindagame.database.SQLite;
 import com.github.kevindagame.events.EventsFileHandler;
 import com.github.kevindagame.events.EventsHandler;
 import com.github.kevindagame.placeholders.DailyLeaderBoardsExpansion;
+import com.github.kevindagame.rewards.JoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -40,6 +41,11 @@ public class DailyLeaderBoards extends JavaPlugin {
         loadConfig();
         loadDatabase();
         loadEvents();
+        loadRewards();
+    }
+
+    private void loadRewards() {
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
     }
 
     @Override
