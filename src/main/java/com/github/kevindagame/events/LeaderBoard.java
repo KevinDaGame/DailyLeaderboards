@@ -30,6 +30,11 @@ public class LeaderBoard {
         return score.get();
     }
 
+    public Score getScore(int rank) {
+        return scores.get(rank - 1);
+    }
+
+
     public List<Score> getScores() {
         return scores;
     }

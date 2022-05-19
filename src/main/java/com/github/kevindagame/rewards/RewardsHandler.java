@@ -1,6 +1,7 @@
 package com.github.kevindagame.rewards;
 
 import com.github.kevindagame.DailyLeaderBoards;
+import com.github.kevindagame.events.Event;
 import org.bukkit.Bukkit;
 
 public class RewardsHandler {
@@ -13,6 +14,12 @@ public class RewardsHandler {
         }
         //add reward to database
         DailyLeaderBoards.plugin.getDataBase().addReward(uuid, reward);
+
+    }
+
+    public static void addRewards(Event event) {
+        var rewards = DailyLeaderBoards.plugin.getPluginConfig().getRewards();
+        var leaderboard = event.getLeaderBoard();
 
     }
 

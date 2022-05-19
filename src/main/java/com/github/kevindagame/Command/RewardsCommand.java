@@ -3,6 +3,7 @@ package com.github.kevindagame.Command;
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Permission;
+import com.github.kevindagame.rewards.RewardsHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RewardsCommand extends CommandModule {
-
+    //This command is disabled for now
     public RewardsCommand(DailyLeaderBoards dailyLeaderBoards) {
         super(dailyLeaderBoards, Message.COMMAND_REWARDS_LABEL, Message.COMMAND_REWARDS_DESCRIPTION, Message.COMMAND_REWARDS_USAGE, 1, 2, Permission.MANAGE);
     }
@@ -23,6 +24,7 @@ public class RewardsCommand extends CommandModule {
                 if (plugin.getServer().getPlayer(args[2]) == null) {
                     Message.INVALID_PLAYER_ERROR.send(sender, args[2]);
                 }
+                RewardsHandler.addReward(args[2], args[3]);
             }
         }
         return true;
