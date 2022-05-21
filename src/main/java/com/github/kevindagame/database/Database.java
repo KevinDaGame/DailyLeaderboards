@@ -152,7 +152,7 @@ public abstract class Database {
         }
     }
 
-    public void addReward(String command, String uuid) {
+    public void addReward(String uuid, String command) {
         //add reward to database
         Connection conn;
         Statement statement;
@@ -173,11 +173,14 @@ public abstract class Database {
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM rewards WHERE (UUID = \"" + uuid + "\")");
+            System.out.println("SELECT * FROM rewards WHERE (UUID = \"" + uuid + "\")");
+            ResultSet rs = statement.executeQuery("SELECT rowid,* FROM rewards WHERE (UUID = \"" + uuid + "\")");
             List<String> commands = new ArrayList<>();
             while (rs.next()) {
                 commands.add(rs.getString("command"));
+                statement.addBatch("DELETE FROM rewards WHERE rowid = " + rs.getInt("rowid") + ";");
             }
+            statement.executeBatch();
             return commands;
         } catch (SQLException throwables) {
             throwables.printStackTrace();

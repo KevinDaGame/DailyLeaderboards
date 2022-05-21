@@ -15,7 +15,7 @@ STOP_EVENT_BROADCAST: "The {0}&r event has ended!"
 START_EVENT_TIMER_BROADCAST: "The {0}&r event will start in {1}!"
 SAVE_EVENT_MESSAGE: "The {0}&r event has been saved"
 INVALID_ARGUMENT_ERROR: "This argument is invalid!"
-
+REWARD_GIVE_MESSAGE: "You have been given a reward!"
 LEADERBOARD_HEADER: "&#EA7EB5{0}"
 LEADERBOARD_HEADER_NO_EVENT: "&cThere's no event here"
 LEADERBOARD_DESCRIPTION: "&f{0}"

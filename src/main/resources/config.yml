@@ -9,8 +9,8 @@ saved-leaderboards: 9
 #these are the rewards for placement. 1 is first place, 2 is second place, etc. you can add numbers to add more rewards.
 rewards:
   1:
-    command: "give %player% minecraft:diamond 1"
+    command: "give %player% diamond 1"
   2:
-    command: "give %player% minecraft:gold_ingot 1"
+    command: "give %player% gold_ingot 1"
   3:
-    command: "give %player% minecraft:emerald 1"
+    command: "give %player% emerald 1"

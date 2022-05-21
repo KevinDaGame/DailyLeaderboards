@@ -4,6 +4,7 @@ import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.TimeFormatter;
 import com.github.kevindagame.database.Database;
+import com.github.kevindagame.rewards.RewardsHandler;
 import org.bukkit.Bukkit;
 
 import javax.naming.ConfigurationException;
@@ -149,7 +150,7 @@ public class EventsHandler {
         addEventToPastEvents(event);
         database.endEvent(event);
         currentEvent = null;
-        //TODO handle rewards here
+        RewardsHandler.addRewards(event);
     }
     private void addEventToPastEvents(Event event){
         pastEvents.add(0, event);
