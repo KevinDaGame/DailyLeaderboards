@@ -4,7 +4,6 @@ import com.github.kevindagame.events.LeaderBoard;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
 public class BucketPickupListener implements Listener {

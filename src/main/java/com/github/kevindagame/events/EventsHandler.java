@@ -4,6 +4,7 @@ import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.TimeFormatter;
 import com.github.kevindagame.database.Database;
+import com.github.kevindagame.rewards.RewardsHandler;
 import org.bukkit.Bukkit;
 
 import javax.naming.ConfigurationException;
@@ -20,7 +21,7 @@ public class EventsHandler {
     private final Database database;
     private final EventsFileHandler eventsFileHandler;
     private Event currentEvent;
-    private List<Event> pastEvents;
+    private final List<Event> pastEvents;
 
     public EventsHandler(DailyLeaderBoards plugin) {
         this.plugin = plugin;
@@ -30,7 +31,7 @@ public class EventsHandler {
         load();
 
     }
-    //only called on first plugin load. This method checks if there is an existing event, and if there isnt it creates and starts a new one
+    //only called on first plugin load. This method checks if there is an existing event, and if there isn't, it creates and starts a new one
     private void load() {
         loadEvents();
         if (loadRunningEvent()) return;
@@ -61,7 +62,7 @@ public class EventsHandler {
         startEvent(event);
     }
 
-    //Create a new event. it takes an event from the filehandler
+    //Create a new event. it takes an event from the file handler
     public Event createNewEvent(Event event) throws UnsupportedOperationException {
         if(currentEvent != null){
             throw new UnsupportedOperationException("There is already an active event!");
@@ -127,7 +128,7 @@ public class EventsHandler {
         return false;
     }
 
-    private Event PopulateEvent(ResultSet eventData, Event event) throws SQLException {
+    private void PopulateEvent(ResultSet eventData, Event event) throws SQLException {
         event.setStartTime(eventData.getTimestamp("start_time"));
         event.setEndTime(eventData.getTimestamp("end_time"));
         event.setId(eventData.getInt("rowid"));
@@ -135,7 +136,6 @@ public class EventsHandler {
         while(leaderboard.next()){
             event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
         }
-        return event;
     }
 
     public void endCurrentEvent(){
@@ -149,7 +149,7 @@ public class EventsHandler {
         addEventToPastEvents(event);
         database.endEvent(event);
         currentEvent = null;
-        //TODO handle rewards here
+        RewardsHandler.addRewards(event);
     }
     private void addEventToPastEvents(Event event){
         pastEvents.add(0, event);

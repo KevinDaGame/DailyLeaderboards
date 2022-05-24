@@ -3,7 +3,6 @@ package com.github.kevindagame.placeholders;
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Score;
-import com.github.kevindagame.events.Event;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
@@ -35,7 +34,7 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer p, String params) {
         String[] newParams = params.split("_");
         //param 0 = header or rank
-        //param 1 = leaderboard number (0 is the current event), 1 is the latest ended, 2 is the 2nd latest etc
+        //param 1 = leaderboard number (0 is the current event), 1 is the latest ended, 2 is the 2nd latest etc.
         //param 2 = the rank (0 based)
         if (newParams[0].equals("header") && newParams.length == 2) {
             return headerRequest(newParams);
@@ -62,8 +61,8 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
     }
 
     private String rankRequest(String[] newParams) {
-        if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
-        if (isinvalidInt(newParams[2])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+        if (isInvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+        if (isInvalidInt(newParams[2])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
         var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
         if(event == null) return Message.LEADERBOARD_RANK_NO_EVENT.getMessage(Integer.parseInt(newParams[2]) + 1);
         var leaderboard = event.getLeaderBoard().getScores().stream().sorted(Comparator.comparingInt(Score::getScore).reversed()).toList();
@@ -75,20 +74,20 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
     }
 
     private String descriptionRequest(String[] newParams) {
-        if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+        if (isInvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
         var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
         if(event == null) return Message.LEADERBOARD_DESCRIPTION_NO_EVENT.getMessage();
         return Message.LEADERBOARD_DESCRIPTION.getMessage(event.getDescription());
     }
 
     private String headerRequest(String[] newParams) {
-        if (isinvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+        if (isInvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
         var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
         if(event == null) return Message.LEADERBOARD_HEADER_NO_EVENT.getMessage();
         return Message.LEADERBOARD_HEADER.getMessage(event.getName());
     }
 
-    private boolean isinvalidInt(String string) {
+    private boolean isInvalidInt(String string) {
         var charArr = string.toCharArray();
         for (char c : charArr) {
             if (!Character.isDigit(c)) return true;

@@ -20,8 +20,14 @@ public class LeaderBoard {
         if (score == null) {
             score = new Score(player.getUniqueId().toString(), player.getName());
             scores.add(score);
+
         }
         score.addScore(amount);
+    }
+
+    //sort scores based on int value score
+    public void sort(){
+        scores.sort((o1, o2) -> o2.getScore() - o1.getScore());
     }
 
     public Score getScore(String uuid) {
@@ -29,6 +35,11 @@ public class LeaderBoard {
         if (score.isEmpty()) return null;
         return score.get();
     }
+
+    public Score getScore(int rank) {
+        return scores.size() >= rank ? scores.get(rank - 1) : null;
+    }
+
 
     public List<Score> getScores() {
         return scores;

@@ -16,40 +16,45 @@
 # event-entity: e.g ZOMBIE
 # event-mob: A mythic mob name
 
-# you can not use a dash in event headers!
+#example
+# dirt-broken: #this is the slug. This must be a unique slug. A slug consists of lowercase letters, numbers, and underscores. No spaces!
+#   event-name: "dirt-broken" #This is the name that will be displayed in the leaderboard.
+#   event-type: "blocks-broken" #This is the type of event.
+#   event-description: "Broken Dirt" #This is the description that will be displayed in the leaderboard.
+#   event-material: "DIRT" #This is the material that will be checked for when a block is broken.
 
 stone-broken:
-  event-name: "&2Stone blocks mined"
-  event-description: Mine stone blocks to get points
+  event-name: "&x&4&a&b&1&f&b&lS&x&5&a&a&2&f&b&lt&x&6&a&9&3&f&b&lo&x&7&a&8&4&f&b&ln&x&8&a&7&5&f&b&le &x&9&c&6&d&f&8&lM&x&b&0&6&e&f&2&li&x&c&3&6&e&e&b&ln&x&d&7&6&f&e&5&le&x&e&b&6&f&d&f&ld"
+  event-description: Mine &lStone&f to get points!
   event-type: blocks-broken
   event-material: STONE
 grass-placed:
-  event-name: "&5Grass blocks placed"
-  event-description: Place grass blocks to get points
+  event-name: "&x&2&e&f&b&4&9&lG&x&4&7&e&0&4&6&lr&x&6&0&c&5&4&3&la&x&7&a&a&a&4&0&ls&x&9&3&8&f&3&d&ls &x&a&c&7&4&3&a&lP&x&b&9&8&2&3&c&ll&x&c&5&8&f&3&e&la&x&d&2&9&d&4&1&lc&x&d&e&a&a&4&3&le&x&e&b&b&8&4&5&ld"
+  event-description: Place &lGrass Blocks&f to get points!
   event-type: blocks-placed
   event-material: GRASS_BLOCK
 wheat-farmed:
-  event-name: "&4Wheat farmed"
-  event-description: Farm wheat to get points
+  event-name: "&x&f&b&f&9&4&a&lW&x&f&c&e&a&4&e&lh&x&f&d&d&c&5&2&le&x&f&d&c&d&5&5&la&x&f&e&b&f&5&9&lt &x&f&f&b&0&5&d&lF&x&e&d&a&1&5&8&la&x&d&b&9&1&5&3&lr&x&c&9&8&2&4&d&lm&x&b&7&7&2&4&8&le&x&a&5&6&3&4&3&ld"
+  event-description: Farm &lWheat&f to get points!
   event-type: blocks-broken
   event-material: WHEAT
 lava-bucket-placed:
-  event-name: "&7Lava placed"
-  event-description: Place lava to get points
+  event-name: "&x&f&b&3&1&1&d&lL&x&f&c&4&6&2&1&la&x&f&d&5&a&2&6&lv&x&f&e&6&f&2&a&la &x&f&f&8&4&2&f&lP&x&f&c&9&b&3&0&ll&x&f&7&b&4&2&e&la&x&f&2&c&d&2&b&lc&x&e&c&e&6&2&9&le&x&e&7&f&f&2&7&ld"
+  event-description: Place &lLava&f to get points!
   event-type: bucket-placed
   event-material: LAVA_BUCKET
 water-bucket-picked-up:
-  event-name: "&8Water picked up"
-  event-description: Pick up water to get points
+  event-name: "&x&2&e&7&a&f&b&lW&x&3&0&8&f&f&c&la&x&3&3&a&4&f&c&lt&x&3&5&b&a&f&d&le&x&3&7&c&f&f&e&lr &x&3&a&e&4&f&e&lG&x&3&c&f&9&f&f&la&x&5&1&f&9&f&f&lt&x&6&6&f&9&f&f&lh&x&7&c&f&9&f&f&le&x&9&1&f&9&f&f&lr&x&a&6&f&9&f&f&le&x&b&b&f&9&f&f&ld"
+  event-description: Gather &lWater&f to get points!
   event-type: bucket-pickup
   event-material: WATER
 creepers-killed:
-  event-name: "&9Creepers killed"
-  event-description: Kill creepers to get points
+  event-name: "&x&1&f&a&2&2&9&lC&x&2&3&a&a&2&e&lr&x&2&6&b&2&3&3&le&x&2&a&b&a&3&9&le&x&2&d&c&1&3&e&lp&x&3&1&c&9&4&3&le&x&3&4&d&1&4&8&lr&x&3&b&d&8&4&d&ls &x&4&6&d&f&5&2&lK&x&5&0&e&5&5&7&li&x&5&b&e&c&5&c&ll&x&6&5&f&2&6&0&ll&x&7&0&f&9&6&5&le&x&7&a&f&f&6&a&ld"
+  event-description: Kill &lCreepers&f to get points!
   event-type: entity-kill
   event-entity: CREEPER
 skeleton-king-killed:
-  event-name: "&1Skeleton kings killed"
-  event-description: You can find skeleton kings in the nether
+  event-name: "&x&5&0&6&a&5&a&lS&x&6&1&6&2&5&4&lk&x&7&1&5&a&4&e&le&x&8&2&5&2&4&8&ll&x&9&3&4&b&4&3&le&x&a&3&4&3&3&d&lt&x&b&4&3&b&3&7&lo&x&c&4&3&3&3&1&ln &x&d&5&2&b&2&b&lK&x&b&e&2&a&2&a&li&x&a&8&2&a&2&9&ln&x&9&1&2&9&2&7&lg &x&7&a&2&8&2&6&lK&x&6&3&2&7&2&5&li&x&4&d&2&7&2&4&ll&x&3&6&2&6&2&2&ll&x&1&f&2&5&2&1&ls"
+  event-description: Find and kill &lSkeleton Kings&f in the &lNether&f to get points!
   event-type: mythic-mob-kill
   event-mob: SkeletonKing

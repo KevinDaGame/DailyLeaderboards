@@ -49,7 +49,7 @@ public class EventListenerFactory {
             case("mythic-mob-kill") -> {
                 if(DailyLeaderBoards.plugin.getServer().getPluginManager().getPlugin("MythicMobs") == null) throw new UnknownDependencyException("The plugin MythicMobs is not found, yet is required for one of your events!");
                 MythicMob mob = getMythicMob(key, file);
-                if(mob != null) return new MythicMobkillsListener(leaderboard, mob);
+                if(mob != null) return new MythicMobKillsListener(leaderboard, mob);
             }
         }
         return null;
@@ -59,12 +59,14 @@ public class EventListenerFactory {
         var entityString = file.getString(key + ".event-entity");
         if (entityString == null)
             throw new NullArgumentException("The key " + key + " in events.yml requires an entity!");
-        var entityType = EntityType.valueOf(entityString);
-        if (entityType == null) {
+        try {
+            var entityType = EntityType.valueOf(entityString);
+            return entityType;
+        }
+        catch (IllegalArgumentException e) {
             error.error(key, "An invalid entity type was specified");
             return null;
         }
-        return entityType;
     }
     private MythicMob getMythicMob(String key, FileConfiguration file) {
         var mobString = file.getString(key + ".event-mob");

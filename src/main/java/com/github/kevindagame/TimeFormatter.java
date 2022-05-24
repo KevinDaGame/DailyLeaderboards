@@ -11,11 +11,11 @@ public class TimeFormatter {
     public static long deformatTimeRemaining(String HHMMSS) throws IllegalArgumentException{
         String[] split = HHMMSS.split(":");
         if(split.length != 3) throw new IllegalArgumentException("The given string is invalid! String: " + HHMMSS);
-        long miliseconds = 0;
-        miliseconds += Long.parseLong(split[0]) * HOUR;
-        miliseconds += Long.parseLong(split[1]) * MINUTE;
-        miliseconds += Long.parseLong(split[2]) * SECOND;
-        return miliseconds;
+        long milliseconds = 0;
+        milliseconds += Long.parseLong(split[0]) * HOUR;
+        milliseconds += Long.parseLong(split[1]) * MINUTE;
+        milliseconds += Long.parseLong(split[2]) * SECOND;
+        return milliseconds;
     }
 
     public static String formatTimeRemaining(long miliseconds) {

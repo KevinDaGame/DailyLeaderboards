@@ -37,7 +37,7 @@ public class EventsFileHandler {
     }
 
     public Event getCurrentEvent(String key) {
-        Event event = null;
+        Event event;
         try {
             event = getEvent(key);
             Listener listener = factory.getListener(event.getLeaderBoard(), key, file);
@@ -52,9 +52,7 @@ public class EventsFileHandler {
 
     public List<String> getAllEventNames() {
         List<String> list = new ArrayList<>(file.getKeys(false));
-        for (int i = 0; i < list.size(); i++) {
-            list.set(i, list.get(i).replace(' ', '-'));
-        }
+        list.replaceAll(s -> s.replace(' ', '-'));
         return list;
     }
 }

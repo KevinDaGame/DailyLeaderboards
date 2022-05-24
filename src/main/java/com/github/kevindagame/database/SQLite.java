@@ -26,7 +26,11 @@ public class SQLite extends Database {
                   'is_running' INT NOT NULL
                   );
 
-
+                CREATE TABLE IF NOT EXISTS rewards (
+                  'UUID' VARCHAR(32) NOT NULL,
+                  'command' VARCHAR(255) NOT NULL
+                  );
+                  
                 CREATE TABLE IF NOT EXISTS score (
                   `event_id` INT NOT NULL,
                   `UUID` VARCHAR(32) NOT NULL,

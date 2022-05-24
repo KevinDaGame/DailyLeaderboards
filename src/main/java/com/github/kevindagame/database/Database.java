@@ -6,6 +6,8 @@ import com.github.kevindagame.Score;
 import com.github.kevindagame.events.Event;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public abstract class Database {
@@ -29,7 +31,7 @@ public abstract class Database {
             close(ps, rs);
 
         } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", ex);
+            plugin.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
         }
     }
 
@@ -147,6 +149,42 @@ public abstract class Database {
             statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + id + ";");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    public void addReward(String uuid, String command) {
+        //add reward to database
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            statement.executeUpdate("INSERT INTO rewards (UUID, command) VALUES(" + "\"" + uuid + "\", \"" + command + "\");");
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<String> getRewards(String uuid) {
+        //get rewards from database
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            System.out.println("SELECT * FROM rewards WHERE (UUID = \"" + uuid + "\")");
+            ResultSet rs = statement.executeQuery("SELECT rowid,* FROM rewards WHERE (UUID = \"" + uuid + "\")");
+            List<String> commands = new ArrayList<>();
+            while (rs.next()) {
+                commands.add(rs.getString("command"));
+                statement.addBatch("DELETE FROM rewards WHERE rowid = " + rs.getInt("rowid") + ";");
+            }
+            statement.executeBatch();
+            return commands;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
         }
     }
 }

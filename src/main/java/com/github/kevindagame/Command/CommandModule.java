@@ -52,6 +52,7 @@ public abstract class CommandModule {
     }
 
     //This method will process the command.
+    @SuppressWarnings("SameReturnValue")
     public abstract boolean run(CommandSender sender, String[] args);
 
     public abstract List<String> tabComplete(String[] args);
