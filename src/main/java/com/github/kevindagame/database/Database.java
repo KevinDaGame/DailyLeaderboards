@@ -31,7 +31,7 @@ public abstract class Database {
             close(ps, rs);
 
         } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", ex);
+            plugin.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
         }
     }
 

@@ -1,6 +1,5 @@
 package com.github.kevindagame.events;
 
-import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -18,7 +17,7 @@ public class Event {
     private Timestamp startTime;
     private Timestamp endTime;
     private int id;
-    private String eventTypeSlug;
+    private final String eventTypeSlug;
     private final String name;
     private Database database;
     private int saveTask;
@@ -32,9 +31,7 @@ public class Event {
     }
 
     public void startAutoSave(JavaPlugin plugin) {
-        saveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            save();
-        }, 1200, 1200);
+        saveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::save, 1200, 1200);
     }
 
     public String getDescription() {

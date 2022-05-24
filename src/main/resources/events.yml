@@ -16,7 +16,12 @@
 # event-entity: e.g ZOMBIE
 # event-mob: A mythic mob name
 
-# you can not use a dash in event headers!
+#example
+# dirt-broken: #this is the slug. This must be a unique slug. A slug consists of lowercase letters, numbers, and underscores. No spaces!
+#   event-name: "dirt-broken" #This is the name that will be displayed in the leaderboard.
+#   event-type: "blocks-broken" #This is the type of event.
+#   event-description: "Broken Dirt" #This is the description that will be displayed in the leaderboard.
+#   event-material: "DIRT" #This is the material that will be checked for when a block is broken.
 
 stone-broken:
   event-name: "&x&4&a&b&1&f&b&lS&x&5&a&a&2&f&b&lt&x&6&a&9&3&f&b&lo&x&7&a&8&4&f&b&ln&x&8&a&7&5&f&b&le &x&9&c&6&d&f&8&lM&x&b&0&6&e&f&2&li&x&c&3&6&e&e&b&ln&x&d&7&6&f&e&5&le&x&e&b&6&f&d&f&ld"

@@ -1,6 +1,5 @@
 package com.github.kevindagame;
 
-import com.github.kevindagame.Command.CommandModule;
 import com.github.kevindagame.Command.CommandModuleFactory;
 import com.github.kevindagame.Command.DailyLeaderBoardsCommand;
 import com.github.kevindagame.Lang.Message;
@@ -11,14 +10,12 @@ import com.github.kevindagame.events.EventsHandler;
 import com.github.kevindagame.placeholders.DailyLeaderBoardsExpansion;
 import com.github.kevindagame.rewards.JoinListener;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 public class DailyLeaderBoards extends JavaPlugin {
     public static DailyLeaderBoards plugin;
@@ -28,6 +25,7 @@ public class DailyLeaderBoards extends JavaPlugin {
     private EventsHandler eventsHandler;
     private DailyLeaderBoardsCommand commandHandler;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         plugin = this;
@@ -36,7 +34,7 @@ public class DailyLeaderBoards extends JavaPlugin {
         plugin.getCommand("dailyleaderboards").setExecutor(commandHandler);
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new DailyLeaderBoardsExpansion(this).register();
-            DailyLeaderBoards.log("Succesfully loaded placeholders");
+            DailyLeaderBoards.log("Successfully loaded placeholders");
         }
         loadConfig();
         loadDatabase();
