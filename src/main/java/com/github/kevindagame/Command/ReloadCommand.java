@@ -3,20 +3,21 @@ package com.github.kevindagame.Command;
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class TestCommand extends CommandModule{
+public class ReloadCommand extends CommandModule{
 
-    public TestCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "test", 0, 0, Permission.DEBUG);
+    public ReloadCommand(DailyLeaderBoards dailyLeaderBoards) {
+        super(dailyLeaderBoards, Message.COMMAND_RELOAD_LABEL, Message.COMMAND_RELOAD_DESCRIPTION, Message.COMMAND_RELOAD_USAGE, 0, 0, Permission.RELOAD);
     }
 
     @Override
     public boolean run(CommandSender sender, String[] args) {
-        Message.TEST_MESSAGE.send(sender, sender.getName());
-        Message.TEST2_MESSAGE.send(sender, sender.getName());
+        Bukkit.getServer().getPluginManager().disablePlugin(plugin);
+        Bukkit.getServer().getPluginManager().enablePlugin(plugin);
         return true;
     }
 

@@ -6,6 +6,8 @@ import com.github.kevindagame.Score;
 import com.github.kevindagame.events.Event;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public abstract class Database {
@@ -24,12 +26,12 @@ public abstract class Database {
     public void initialize() {
         connection = getSQLConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM event WHERE name = \"\"");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM event WHERE type_slug = \"\"");
             ResultSet rs = ps.executeQuery();
             close(ps, rs);
 
         } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", ex);
+            plugin.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
         }
     }
 
@@ -67,7 +69,7 @@ public abstract class Database {
     public Event createEvent(Event e) throws SQLException {
         Connection conn = getSQLConnection();
         Statement statement = conn.createStatement();
-        statement.executeUpdate("INSERT INTO event (name, start_time, end_time, is_running) VALUES(\"" + e.getName() + "\", \"" + e.getStartTime() + "\", \"" + e.getEndTime() + "\", 1);");
+        statement.executeUpdate("INSERT INTO event (type_slug, start_time, end_time, is_running) VALUES(\"" + e.getEventTypeSlug() + "\", \"" + e.getStartTime() + "\", \"" + e.getEndTime() + "\", 1);");
         var rs = statement.getGeneratedKeys();
         if (rs.next()) {
             e.setId(rs.getInt(1));
@@ -87,6 +89,22 @@ public abstract class Database {
             conn = getSQLConnection();
             statement = conn.createStatement();
             return statement.executeQuery("SELECT rowid, * FROM event WHERE (is_running = 1) LIMIT 1");
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public ResultSet getEvents(int amount) {
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+
+            return statement.executeQuery("SELECT rowid, * FROM event WHERE (is_running = 0) ORDER BY 'end_time' DESC LIMIT " + amount);
 
 
         } catch (SQLException throwables) {
@@ -116,9 +134,57 @@ public abstract class Database {
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            statement.executeUpdate("UPDATE event SET is_running = 0 WHERE rowid = " + event.getId() + ";");
+            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + event.getId() + ";");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    public void forceEndEvent(int id) {
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + id + ";");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void addReward(String uuid, String command) {
+        //add reward to database
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            statement.executeUpdate("INSERT INTO rewards (UUID, command) VALUES(" + "\"" + uuid + "\", \"" + command + "\");");
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<String> getRewards(String uuid) {
+        //get rewards from database
+        Connection conn;
+        Statement statement;
+        try {
+            conn = getSQLConnection();
+            statement = conn.createStatement();
+            System.out.println("SELECT * FROM rewards WHERE (UUID = \"" + uuid + "\")");
+            ResultSet rs = statement.executeQuery("SELECT rowid,* FROM rewards WHERE (UUID = \"" + uuid + "\")");
+            List<String> commands = new ArrayList<>();
+            while (rs.next()) {
+                commands.add(rs.getString("command"));
+                statement.addBatch("DELETE FROM rewards WHERE rowid = " + rs.getInt("rowid") + ";");
+            }
+            statement.executeBatch();
+            return commands;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
         }
     }
 }

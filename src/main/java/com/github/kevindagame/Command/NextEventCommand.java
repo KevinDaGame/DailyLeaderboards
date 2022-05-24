@@ -12,7 +12,7 @@ import java.util.List;
 public class NextEventCommand extends CommandModule {
 
     public NextEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "next", 0, 1, Permission.NEXT);
+        super(dailyLeaderBoards, Message.COMMAND_NEXT_LABEL, Message.COMMAND_NEXT_DESCRIPTION, Message.COMMAND_NEXT_USAGE, 0, 1, Permission.NEXT);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class NextEventCommand extends CommandModule {
         var eventsFileHandler = plugin.getEventsFileHandler();
         Event event = null;
         if (args.length == 1) {
-            event = eventsFileHandler.getEvent(args[0]);
+            event = eventsFileHandler.getCurrentEvent(args[0]);
             if (event == null) {
                 Message.INVALID_EVENT_ERROR.send(sender, args[0]);
                 return true;

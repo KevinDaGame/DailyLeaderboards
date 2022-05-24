@@ -9,7 +9,7 @@ public class ColorUtils {
     private static final Pattern HEX_PATTERN = Pattern.compile("&(#\\w{6})");
     public static String colorize(String message) {
         Matcher matcher = HEX_PATTERN.matcher(ChatColor.translateAlternateColorCodes('&', message));
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         while (matcher.find()) {
             matcher.appendReplacement(buffer, ChatColor.of(matcher.group(1)).toString());

@@ -62,4 +62,8 @@ public class DailyLeaderBoardsCommand implements CommandExecutor, TabCompleter {
         }
         return commandModule.tabComplete(args);
     }
+
+    public Map<String, CommandModule> getCommandModules() {
+        return commandModules;
+    }
 }

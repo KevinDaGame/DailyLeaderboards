@@ -7,14 +7,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class LangCommand extends CommandModule {
     public LangCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "lang", 1, 2, Permission.MANAGE);
+        super(dailyLeaderBoards, Message.COMMAND_LANG_LABEL, Message.COMMAND_LANG_DESCRIPTION, Message.COMMAND_LANG_USAGE, 1, 2, Permission.MANAGE);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class LangCommand extends CommandModule {
                 case "test":
                     return Arrays.stream(Message.values()).map(Message::toString).toList();
                 case "reset":
-                    return Arrays.asList("confirm");
+                    return List.of("confirm");
             }
         }
         if(args.length == 2){

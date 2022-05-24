@@ -1,28 +1,26 @@
 package com.github.kevindagame.Command;
 
 import com.github.kevindagame.DailyLeaderBoards;
+import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Permission;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public abstract class CommandModule
-{
-    private final String label;
+public abstract class CommandModule {
+    private final Message label;
     private final int minArgs;
     private final int maxArgs;
     private final Permission permission;
     protected final DailyLeaderBoards plugin;
+    private final Message usage;
+    private final Message description;
 
-    /**
-     * @param label - The label of the command.
-     * @param minArgs - The minimum amount of arguments.
-     * @param maxArgs - The maximum amount of arguments.
-     */
-    public CommandModule(DailyLeaderBoards dailyLeaderBoards, String label, int minArgs, int maxArgs, Permission permission)
-    {
+    public CommandModule(DailyLeaderBoards dailyLeaderBoards, Message label, Message description, Message usage, int minArgs, int maxArgs, Permission permission) {
         this.plugin = dailyLeaderBoards;
         this.label = label;
+        this.description = description;
+        this.usage = usage;
         this.minArgs = minArgs;
         this.maxArgs = maxArgs;
         this.permission = permission;
@@ -34,7 +32,7 @@ public abstract class CommandModule
     }
 
     public String getLabel() {
-        return label;
+        return label.getMessage();
     }
 
     public int getMinArgs() {
@@ -45,7 +43,16 @@ public abstract class CommandModule
         return maxArgs;
     }
 
+    public String getDescription() {
+        return description.getMessage();
+    }
+
+    public String getUsage() {
+        return "/dlb " + getLabel() + " " + usage.getMessage();
+    }
+
     //This method will process the command.
+    @SuppressWarnings("SameReturnValue")
     public abstract boolean run(CommandSender sender, String[] args);
 
     public abstract List<String> tabComplete(String[] args);

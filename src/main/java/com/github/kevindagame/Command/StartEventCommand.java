@@ -11,7 +11,7 @@ import java.util.List;
 public class StartEventCommand extends CommandModule{
 
     public StartEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "start", 0, 1, Permission.START);
+        super(dailyLeaderBoards, Message.COMMAND_START_LABEL, Message.COMMAND_START_DESCRIPTION, Message.COMMAND_START_USAGE, 0, 1, Permission.START);
     }
 
     @Override
@@ -21,8 +21,7 @@ public class StartEventCommand extends CommandModule{
         plugin.getPluginConfig().enableAutoRun();
         Event event = null;
         if (args.length == 1) {
-            args[0] = args[0].replace('-', ' ');
-            event = eventsFileHandler.getEvent(args[0]);
+            event = eventsFileHandler.getCurrentEvent(args[0]);
             if (event == null) {
                 Message.INVALID_EVENT_ERROR.send(sender, args[0]);
                 return true;

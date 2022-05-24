@@ -2,4 +2,15 @@ table-name: daily_leaderboard
 database-name: daily_leaderboards
 #event duration. Formatted like: HH:MM:SS
 event-duration: "24:00:00"
-auto-run: false
+auto-run: true
+#how many leaderboards should be saved for viewing previous leaderboards? (this is added to the current event)
+saved-leaderboards: 9
+
+#these are the rewards for placement. 1 is first place, 2 is second place, etc. you can add numbers to add more rewards.
+rewards:
+  1:
+    command: "give %player% diamond 1"
+  2:
+    command: "give %player% gold_ingot 1"
+  3:
+    command: "give %player% emerald 1"

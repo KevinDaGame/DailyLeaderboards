@@ -10,7 +10,7 @@ import java.util.List;
 public class SaveEventCommand extends CommandModule{
 
     public SaveEventCommand(DailyLeaderBoards dailyLeaderBoards) {
-        super(dailyLeaderBoards, "save", 0, 0, Permission.MANAGE);
+        super(dailyLeaderBoards, Message.COMMAND_SAVE_LABEL, Message.COMMAND_SAVE_DESCRIPTION, Message.COMMAND_SAVE_USAGE, 0, 0, Permission.MANAGE);
     }
 
     @Override
