@@ -73,6 +73,7 @@ public class EventsHandler {
         // d to ms
         Timestamp endDate = new Timestamp(System.currentTimeMillis() + TimeFormatter.deformatTimeRemaining(plugin.getPluginConfig().getEventDuration()));
         event.setEndTime(endDate);
+        event.setRunning(true);
         try {
             event = database.createEvent(event);
             return event;
@@ -132,6 +133,7 @@ public class EventsHandler {
         event.setStartTime(eventData.getTimestamp("start_time"));
         event.setEndTime(eventData.getTimestamp("end_time"));
         event.setId(eventData.getInt("rowid"));
+        event.setRunning(eventData.getBoolean("is_running"));
         var leaderboard = database.getLeaderBoard(event.getId());
         while(leaderboard.next()){
             event.getLeaderBoard().addScore(Bukkit.getOfflinePlayer(UUID.fromString(leaderboard.getString("UUID"))), leaderboard.getInt("score"));
