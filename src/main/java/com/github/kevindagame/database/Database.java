@@ -104,7 +104,7 @@ public abstract class Database {
             conn = getSQLConnection();
             statement = conn.createStatement();
 
-            return statement.executeQuery("SELECT rowid, * FROM event WHERE (is_running = 0) ORDER BY 'end_time' DESC LIMIT " + amount);
+            return statement.executeQuery("SELECT rowid, * FROM event WHERE (is_running = 0) ORDER BY end_time DESC LIMIT " + amount);
 
 
         } catch (SQLException throwables) {
