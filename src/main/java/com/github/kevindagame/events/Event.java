@@ -22,6 +22,7 @@ public class Event {
     private Database database;
     private int saveTask;
     private int endTask;
+    private boolean running;
 
     public Event(String slug, String name, String description) {
         this.name = name;
@@ -32,6 +33,13 @@ public class Event {
 
     public void startAutoSave(JavaPlugin plugin) {
         saveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::save, 1200, 1200);
+    }
+    public void setRunning(boolean running){
+        this.running = running;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     public String getDescription() {
@@ -124,6 +132,7 @@ public class Event {
     public void stop() {
         Bukkit.getScheduler().cancelTask(saveTask);
         save();
+        setRunning(false);
         HandlerList.unregisterAll(listener);
     }
 }
