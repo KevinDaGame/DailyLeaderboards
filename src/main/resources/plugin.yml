@@ -1,5 +1,5 @@
 name: 'dailyleaderboards'
-version: 1.0.0
+version: ${project.version}
 main: com.github.kevindagame.DailyLeaderBoards
 api-version: 1.16
 author: KevinDaGame
