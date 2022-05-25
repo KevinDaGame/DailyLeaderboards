@@ -3,6 +3,7 @@ package com.github.kevindagame.placeholders;
 import com.github.kevindagame.DailyLeaderBoards;
 import com.github.kevindagame.Lang.Message;
 import com.github.kevindagame.Score;
+import com.github.kevindagame.TimeFormatter;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
@@ -42,6 +43,9 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         if (newParams[0].equals("description") && newParams.length == 2) {
             return descriptionRequest(newParams);
         }
+        if (newParams[0].equals("time") && newParams.length == 2) {
+            return timeRequest(newParams);
+        }
         if (newParams[0].equals("score")) {
             return score(p);
         }
@@ -78,6 +82,14 @@ public class DailyLeaderBoardsExpansion extends PlaceholderExpansion {
         var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
         if(event == null) return Message.LEADERBOARD_DESCRIPTION_NO_EVENT.getMessage();
         return Message.LEADERBOARD_DESCRIPTION.getMessage(event.getDescription());
+    }
+    private String timeRequest(String[] newParams) {
+        if (isInvalidInt(newParams[1])) return Message.LEADERBOARD_INVALID_VALUE.getMessage();
+        var event = plugin.getEventsHandler().getEvent(Integer.parseInt(newParams[1]));
+        if(event == null) return Message.LEADERBOARD_TIME_NO_EVENT.getMessage();
+        if(event.isRunning()) return Message.LEADERBOARD_TIME.getMessage(TimeFormatter.formatTimeRemaining(event.getTimeRemaining()));
+        return Message.LEADERBOARD_TIME_ENDED.getMessage();
+
     }
 
     private String headerRequest(String[] newParams) {
