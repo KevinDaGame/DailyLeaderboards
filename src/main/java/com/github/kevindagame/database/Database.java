@@ -134,7 +134,7 @@ public abstract class Database {
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + event.getId() + ";");
+            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = \"" + new Timestamp(System.currentTimeMillis()) + "\" WHERE rowid = " + event.getId() + ";");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -146,7 +146,7 @@ public abstract class Database {
         try {
             conn = getSQLConnection();
             statement = conn.createStatement();
-            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = CURRENT_TIMESTAMP WHERE rowid = " + id + ";");
+            statement.executeUpdate("UPDATE event SET is_running = 0, end_time = \"" + new Timestamp(System.currentTimeMillis()) + "\" WHERE rowid = " + id + ";");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
