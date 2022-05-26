@@ -11,11 +11,10 @@ import java.util.UUID;
 public class RewardsHandler {
     //add reward
     public static void addReward(String uuid, String reward) {
-        reward = reward.replaceAll("%player%", uuid);
         //if player is online then give rewards
         if (DailyLeaderBoards.plugin.getServer().getPlayer(UUID.fromString(uuid)) != null) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), reward);
-            Message.REWARD_GIVE_MESSAGE.send(Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(uuid))), reward);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), replaceVariables(uuid, reward));
+            Message.REWARD_GIVE_MESSAGE.send(Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(uuid))));
             return;
         }
         //add reward to database
@@ -23,6 +22,9 @@ public class RewardsHandler {
 
     }
 
+    private static String replaceVariables(String uuid, String reward) {
+        return reward.replaceAll("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()));
+    }
     public static void addRewards(Event event) {
         var rewards = DailyLeaderBoards.plugin.getPluginConfig().getRewards();
         var leaderboard = event.getLeaderBoard();
@@ -39,8 +41,8 @@ public class RewardsHandler {
     public static void handleRewards(String uuid){
         var rewards = DailyLeaderBoards.plugin.getDataBase().getRewards(uuid);
         for (String reward : rewards) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), reward);
-            Message.REWARD_GIVE_MESSAGE.send(Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(uuid))), reward);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), replaceVariables(uuid, reward));
+            Message.REWARD_GIVE_MESSAGE.send(Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(uuid))));
 
         }
     }
